@@ -1,0 +1,17 @@
+{
+    "name": "skywire/wordpressapi",
+    "description": "Wordpress integration",
+    "require": {
+        "php": "~7.0.0|~7.1.0",
+        "magento/magento-composer-installer": "*"
+    },
+    "type": "magento2-module",
+    "autoload": {
+        "files": [
+            "src/registration.php"
+        ],
+        "psr-4": {
+            "Skywire\\WordpressApi\\": "src"
+        }
+    }
+}

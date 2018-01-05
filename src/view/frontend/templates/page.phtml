@@ -1,0 +1,12 @@
+<?php /* @var \Skywire\WordpressApi\Block\Page $block */ ?>
+<?php $page = $block->getPage() ?>
+<main class="site-main">
+    <article class="single-post">
+        <header class="entry-header">
+            <h1 class="entry-title"><?php echo $page->getTitle()->getRendered(); ?></h1>
+        </header>
+        <div class="entry-content">
+            <div class="post-content"><?php echo $page->getContent()->getRendered(); ?></div>
+        </div>
+    </article>
+</main>

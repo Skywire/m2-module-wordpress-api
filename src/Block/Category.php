@@ -1,0 +1,54 @@
+<?php
+
+namespace Skywire\WordpressApi\Block;
+
+use Magento\Framework\DataObject;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
+use Skywire\WordpressApi\Model\Api\Media;
+
+class Category
+    extends \Magento\Framework\View\Element\Template
+{
+    /**
+     * @var Registry
+     */
+    private $registry;
+
+    /**
+     * @var \Skywire\WordpressApi\Model\Api\Post
+     */
+    private $postApi;
+
+    public function __construct(
+        Template\Context $context,
+        Registry $registry,
+        \Skywire\WordpressApi\Model\Api\Post $postApi,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
+        $this->registry = $registry;
+        $this->postApi  = $postApi;
+    }
+
+    /** @return DataObject */
+    public function getCategory()
+    {
+        return $this->registry->registry('current_category');
+    }
+
+    public function getPosts()
+    {
+        $category = $this->getCategory();
+        $posts    = $this->postApi->getCollection([
+            'categories' => $category->getId(),
+        ]);
+        return $posts;
+    }
+
+    /** @return string */
+    public function renderPost($post)
+    {
+        return $this->getChildBlock('skywire_wordpressapi.post.renderer')->setPost($post)->toHtml();
+    }
+}

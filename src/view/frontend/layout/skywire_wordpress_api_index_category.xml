@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="checkout" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Skywire\WordpressApi\Block\Category" name="skywire_wordpressapi.category" template="Skywire_WordpressApi::category.phtml">
+                <block class="Skywire\WordpressApi\Block\Post" name="skywire_wordpressapi.post.renderer" template="Skywire_WordpressApi::category/post.phtml" />
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="skywire_wordpress_api" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Skywire Wordpress API</label>
+            <tab>service</tab>
+            <resource>Skywire_WordpressApi::resource</resource>
+            <group id="api" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>API Configuration</label>
+                <field id="base_url" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>WP Base URL</label>
+                    <comment>e.g http://example.com/</comment>
+                    <validate>required-entry validate-url</validate>
+                </field>
+                <field id="path" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>WP API Path</label>
+                    <comment>e.g. /wp-json/wp/v2</comment>
+                    <validate>required-entry validate-url</validate>
+                </field>
+                <field id="username" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Username</label>
+                    <comment>HTTP Auth Username</comment>
+                </field>
+                <field id="password" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Password</label>
+                    <comment>HTTP Auth Password</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

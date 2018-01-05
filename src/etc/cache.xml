@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Cache/etc/cache.xsd">
+    <type name="skywire_wordpress_api" translate="label,description" instance="Skywire\WordpressApi\Model\Api\Cache">
+        <label>Skywire Wordpress API</label>
+        <description>Caches results from external Wordpress API</description>
+    </type>
+</config>

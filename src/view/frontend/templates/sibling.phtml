@@ -1,0 +1,8 @@
+<?php /* @var Skywire\WordpressApi\Block\Sibling $block */ ?>
+<div class="archive">
+    <main class="site-main">
+        <?php foreach ($block->getSiblingPosts() as $post): ?>
+            <?php echo $block->renderPost($post) ?>
+        <?php endforeach; ?>
+    </main>
+</div>
