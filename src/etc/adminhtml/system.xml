@@ -16,7 +16,6 @@
                 <field id="path" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>WP API Path</label>
                     <comment>e.g. /wp-json/wp/v2</comment>
-                    <validate>required-entry validate-url</validate>
                 </field>
                 <field id="username" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Username</label>
