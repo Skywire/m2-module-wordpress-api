@@ -23,6 +23,7 @@ namespace Skywire\WordpressApi\Controller;
 
 use Skywire\WordpressApi\Helper\RequestHelper;
 use Skywire\WordpressApi\Helper\UrlHelper;
+use Skywire\WordpressApi\Model\Api\ApiException;
 use Skywire\WordpressApi\Model\Api\Category;
 use Skywire\WordpressApi\Model\Api\Post;
 use Skywire\WordpressApi\Model\Api\Page;
@@ -112,7 +113,12 @@ class Router
      */
     public function match(\Magento\Framework\App\RequestInterface $request)
     {
-        $identifier = $this->requestHelper->getSlug($request);
+        try {
+            $isMatch = call_user_func([$this, $method], $identifier);
+        }
+        catch (ApiException $exception) {
+            return false;
+        }
 
         foreach ($this->_matchers as $action => $method) {
             $isMatch = call_user_func([$this, $method], $identifier);
