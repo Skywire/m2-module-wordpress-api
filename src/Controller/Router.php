@@ -113,15 +113,14 @@ class Router
      */
     public function match(\Magento\Framework\App\RequestInterface $request)
     {
-        try {
-            $isMatch = call_user_func([$this, $method], $identifier);
-        }
-        catch (ApiException $exception) {
-            return false;
-        }
 
         foreach ($this->_matchers as $action => $method) {
-            $isMatch = call_user_func([$this, $method], $identifier);
+            try {
+                $isMatch = call_user_func([$this, $method], $identifier);
+            }
+            catch (ApiException $exception) {
+                return false;
+            }
 
             if ($isMatch) {
                 $request->setModuleName('skywire_wordpress_api')
