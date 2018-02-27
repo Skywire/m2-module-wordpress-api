@@ -113,13 +113,15 @@ class Router
      */
     public function match(\Magento\Framework\App\RequestInterface $request)
     {
+        $identifier = $this->requestHelper->getSlug($request);
 
         foreach ($this->_matchers as $action => $method) {
+            $isMatch = false;
             try {
                 $isMatch = call_user_func([$this, $method], $identifier);
             }
             catch (ApiException $exception) {
-                return false;
+                // swallow the error as most likely a 404
             }
 
             if ($isMatch) {
