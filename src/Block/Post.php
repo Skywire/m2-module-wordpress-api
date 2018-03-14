@@ -51,15 +51,13 @@ class Post
 
     public function getFeaturedImage()
     {
-        if (!$this->hasData('featured_image')) {
-            $post = $this->getPost();
+        $post = $this->getPost();
 
-            if (!$post->getFeaturedMedia()) {
-                $this->setData('featured_image', '');
-            } else {
-                $media = $this->mediaApi->getEntity($post->getFeaturedMedia());
-                $this->setData('featured_image', $media->getSourceUrl());
-            }
+        if (!$post->getFeaturedMedia()) {
+            $this->setData('featured_image', '');
+        } else {
+            $media = $this->mediaApi->getEntity($post->getFeaturedMedia());
+            $this->setData('featured_image', $media->getSourceUrl());
         }
 
         return $this->getData('featured_image');
