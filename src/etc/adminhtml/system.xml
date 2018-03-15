@@ -17,6 +17,14 @@
                     <label>WP API Path</label>
                     <comment>e.g. /wp-json/wp/v2</comment>
                 </field>
+                <field id="sub_dir" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sub directory</label>
+                    <comment>Sub directory for posts etc to appear under. IE blog</comment>
+                </field>
+                <field id="nav_name" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Navigation Name</label>
+                    <comment>What to show in breadcrumbs. IE: Blog</comment>
+                </field>
                 <field id="username" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Username</label>
                     <comment>HTTP Auth Username</comment>

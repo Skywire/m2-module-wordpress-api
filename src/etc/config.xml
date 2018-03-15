@@ -5,6 +5,8 @@
         <skywire_wordpress_api>
             <api>
                 <path>/wp-json/wp/v2</path>
+                <sub_dir>blog</sub_dir>
+                <nav_name>Blog</nav_name>
             </api>
         </skywire_wordpress_api>
     </default>

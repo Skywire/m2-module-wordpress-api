@@ -6,6 +6,7 @@ use Magento\Framework\DataObject;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 use Skywire\WordpressApi\Model\Api\Media;
+use Magento\Store\Model\ScopeInterface;
 
 class Post
     extends \Magento\Framework\View\Element\Template
@@ -50,9 +51,12 @@ class Post
             $breadcrumbsBlock->addCrumb(
                 'blog',
                 [
-                    'label' => __('Blog'),
-                    'title' => __('Blog'),
-                    'link' => $this->_urlBuilder->getUrl('blog')
+                    'label' => __($this->_scopeConfig->getValue('skywire_wordpress_api/api/nav_name',
+                        ScopeInterface::SCOPE_STORE)),
+                    'title' => __($this->_scopeConfig->getValue('skywire_wordpress_api/api/nav_name',
+                        ScopeInterface::SCOPE_STORE)),
+                    'link' => $this->_urlBuilder->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
+                        ScopeInterface::SCOPE_STORE))
                 ]
             );
             $breadcrumbsBlock->addCrumb(
@@ -81,7 +85,8 @@ class Post
      */
     public function getPostUrl()
     {
-        return $this->getUrl($this->getPost()->getSlug());
+        return $this->getUrl($this->_urlBuilder->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
+            ScopeInterface::SCOPE_STORE)) . '/' . $this->getPost()->getSlug());
     }
 
     public function getFeaturedImage()
