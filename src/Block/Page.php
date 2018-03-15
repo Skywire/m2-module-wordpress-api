@@ -11,10 +11,7 @@ use Magento\Store\Model\ScopeInterface;
 class Page
     extends \Magento\Framework\View\Element\Template
 {
-    /**
-     * @var BreadcrumbHelper
-     */
-    protected $breadcrumbHelper;
+
     /**
      * @var Registry
      */
@@ -23,12 +20,10 @@ class Page
     public function __construct(
         Template\Context $context,
         Registry $registry,
-        BreadcrumbHelper $breadcrumbHelper,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->registry = $registry;
-        $this->breadcrumbHelper = $breadcrumbHelper;
     }
 
     /**
