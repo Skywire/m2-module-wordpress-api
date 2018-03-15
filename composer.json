@@ -6,7 +6,7 @@
         "magento/magento-composer-installer": "*"
     },
     "type": "magento2-module",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "autoload": {
         "files": [
             "src/registration.php"

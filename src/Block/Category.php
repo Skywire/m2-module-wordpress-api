@@ -38,7 +38,7 @@ class Category
      */
     protected function _prepareLayout()
     {
-        $title = $this->getCategory()->getTitle()->getRendered();
+        $title = $this->getCategory()->getName();
         if ($breadcrumbsBlock = $this->getLayout()->getBlock('breadcrumbs')) {
             $breadcrumbsBlock->addCrumb(
                 'home',
