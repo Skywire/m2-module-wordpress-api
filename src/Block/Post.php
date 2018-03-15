@@ -85,8 +85,8 @@ class Post
      */
     public function getPostUrl()
     {
-        return $this->getUrl($this->_urlBuilder->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
-            ScopeInterface::SCOPE_STORE)) . '/' . $this->getPost()->getSlug());
+        return $this->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
+            ScopeInterface::SCOPE_STORE) . '/' . $this->getPost()->getSlug());
     }
 
     public function getFeaturedImage()
