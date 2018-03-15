@@ -55,7 +55,7 @@ class Post
                         ScopeInterface::SCOPE_STORE)),
                     'title' => __($this->_scopeConfig->getValue('skywire_wordpress_api/api/nav_name',
                         ScopeInterface::SCOPE_STORE)),
-                    'link' => $this->_urlBuilder->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
+                    'link' => $this->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
                         ScopeInterface::SCOPE_STORE))
                 ]
             );
