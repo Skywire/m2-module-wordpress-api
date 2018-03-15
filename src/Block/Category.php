@@ -31,6 +31,41 @@ class Category
         $this->postApi  = $postApi;
     }
 
+    /**
+     * override to add in breadcrumbs
+     * @return mixed
+     */
+    protected function _prepareLayout()
+    {
+        $title = $this->getCategory()->getTitle()->getRendered();
+        if ($breadcrumbsBlock = $this->getLayout()->getBlock('breadcrumbs')) {
+            $breadcrumbsBlock->addCrumb(
+                'home',
+                [
+                    'label' => __('Home'),
+                    'title' => __('Home'),
+                    'link' => $this->_storeManager->getStore()->getBaseUrl()
+                ]
+            );
+            $breadcrumbsBlock->addCrumb(
+                'blog',
+                [
+                    'label' => __('Blog'),
+                    'title' => __('Blog'),
+                    'link' => $this->_urlBuilder->getUrl('blog')
+                ]
+            );
+            $breadcrumbsBlock->addCrumb(
+                'post',
+                [
+                    'label' => __($title),
+                    'title' => __($title)
+                ]
+            );
+        }
+        return parent::_prepareLayout();
+    }
+
     /** @return DataObject */
     public function getCategory()
     {
