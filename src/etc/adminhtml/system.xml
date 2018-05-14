@@ -34,6 +34,13 @@
                     <comment>HTTP Auth Password</comment>
                 </field>
             </group>
+            <group id="pagination" translate="label" type="text" sortOrder="20" showInDefault="1">
+                <label>Category Pagination</label>
+                <field id="posts_per_page" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Posts Per Page</label>
+                    <comment>Number of posts to show per category page, 1 to 100</comment>
+                </field>
+            </group>
         </section>
     </system>
 </config>

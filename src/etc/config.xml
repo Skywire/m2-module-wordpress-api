@@ -8,6 +8,9 @@
                 <sub_dir>blog</sub_dir>
                 <nav_name>Blog</nav_name>
             </api>
+            <pagination>
+                <posts_per_page>10</posts_per_page>
+            </pagination>
         </skywire_wordpress_api>
     </default>
 </config>

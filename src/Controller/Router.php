@@ -119,8 +119,7 @@ class Router
             $isMatch = false;
             try {
                 $isMatch = call_user_func([$this, $method], $identifier);
-            }
-            catch (ApiException $exception) {
+            } catch (ApiException $exception) {
                 // swallow the error as most likely a 404
             }
 
@@ -129,6 +128,10 @@ class Router
                     ->setControllerName('index')
                     ->setActionName($action);
                 $request->setAlias(\Magento\Framework\Url::REWRITE_REQUEST_PATH_ALIAS, $identifier);
+
+                if ($page = $this->requestHelper->getCurrentPage($request)) {
+                    $request->setParams(['p' => $page]);
+                }
 
                 return $this->actionFactory->create(\Magento\Framework\App\Action\Forward::class);
 

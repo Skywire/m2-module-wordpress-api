@@ -1,0 +1,26 @@
+<?php /** @var \Skywire\WordpressApi\Block\Category\Pagination $block */ ?>
+
+<?php $prev = $block->getPrevPageUrl(); ?>
+<?php $next = $block->getNextPageUrl(); ?>
+<?php if ($prev || $next): ?>
+    <nav class="navigation paging-navigation medium-8 columns" role="navigation">
+        <div class="nav-links">
+            <?php if ($prev): ?>
+                <div class="nav-previous button">
+                    <a href="<?php echo $prev; ?>">
+                        <span class="meta-nav">&larr;</span>
+                        <?php echo __('Newer posts'); ?>
+                    </a>
+                </div>
+            <?php endif; ?>
+            <?php if ($next): ?>
+                <div class="nav-next button">
+                    <a href="<?php echo $next; ?>">
+                        <?php echo __('Older posts'); ?>
+                        <span class="meta-nav">&rarr;</span>
+                    </a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </nav>
+<?php endif; ?>

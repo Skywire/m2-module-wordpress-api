@@ -6,29 +6,6 @@
             <?php echo $block->renderPost($post) ?>
         <?php endforeach; ?>
 
-        <!--        --><?php //$prev = $this->getPrevPageUrl(); ?>
-        <!--        --><?php //$next = $this->getNextPageUrl(); ?>
-        <!--        --><?php //if ($prev || $next): ?>
-        <!--            <nav class="navigation paging-navigation medium-8 columns" role="navigation">-->
-        <!--                <div class="nav-links">-->
-        <!--                    --><?php //if ($prev): ?>
-        <!--                        <div class="nav-previous button">-->
-        <!--                            <a href="--><?php //echo $prev; ?><!--">-->
-        <!--                                <span class="meta-nav">&larr;</span>-->
-        <!--                                --><?php //echo $this->__('Newer posts'); ?>
-        <!--                            </a>-->
-        <!--                        </div>-->
-        <!--                    --><?php //endif; ?>
-        <!--                    --><?php //if ($next): ?>
-        <!--                        <div class="nav-next button">-->
-        <!--                            <a href="--><?php //echo $next; ?><!--">-->
-        <!--                                --><?php //echo $this->__('Older posts'); ?>
-        <!--                                <span class="meta-nav">&rarr;</span>-->
-        <!--                            </a>-->
-        <!--                        </div>-->
-        <!--                    --><?php //endif; ?>
-        <!--                </div>-->
-        <!--            </nav>-->
-        <!--        --><?php //endif; ?>
+        <?php echo $block->getChildHtml('pagination') ?>
     </main>
 </div>

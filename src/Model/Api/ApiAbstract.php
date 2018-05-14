@@ -22,8 +22,8 @@ namespace Skywire\WordpressApi\Model\Api;
  */
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Data\Collection;
-use Magento\Framework\Data\CollectionFactory;
+use Skywire\WordpressApi\Model\Data\Collection;
+use Skywire\WordpressApi\Model\Data\CollectionFactory;
 use Magento\Framework\DataObject;
 use Magento\Store\Model\ScopeInterface;
 
@@ -76,9 +76,15 @@ abstract class ApiAbstract
      */
     public function getCollection($params = array())
     {
-        $result = $this->_request($this->_parseRoute(), $params);
+        $response = $this->_request($this->_parseRoute(), $params);
 
-        return $this->_createCollection($result);
+        $collection = $this->_createCollection(\Zend_Json::decode($response->getBody()));
+
+        if ($totalPages = $response->getHeader('X-WP-TotalPages')) {
+            $collection->setLastPageNumber($totalPages);
+        }
+
+        return $collection;
     }
 
     /**
@@ -90,7 +96,7 @@ abstract class ApiAbstract
     {
         $result = $this->_request($this->_parseRoute($id));
         $entity = new DataObject();
-        $this->_populateApiData($result, $entity);
+        $this->_populateApiData(\Zend_Json::decode($result->getBody()), $entity);
 
         return $entity;
     }
@@ -161,34 +167,30 @@ abstract class ApiAbstract
      * @param string $route
      * @param array  $params
      *
-     * @return array
+     * @return \Zend_Http_Response
      */
     protected function _request($route, $params = [])
     {
         $cacheKey = $this->_getCacheKey($route, $params);
         $cached   = $this->cache->load($cacheKey);
         if ($cached) {
-            $cached = \Zend_Json::decode($cached);
-
-            return $cached;
+            return unserialize($cached);
         }
 
         $client = $this->_getRestClient();
         $client->getHttpClient()->resetParameters();
         $this->_applyAuth($client);
 
-        $response = $client->restGet($route, $params);
+        $response     = $client->restGet($route, $params);
         $responseBody = $response->getBody();
 
         if ($response->getStatus() !== 200) {
             throw new ApiException($responseBody, $response->getStatus());
         }
 
-        $this->cache->save($responseBody, $cacheKey, [], 3600 * 24);
+        $this->cache->save(serialize($response), $cacheKey, [], 3600 * 24);
 
-        $responseBody = \Zend_Json::decode($responseBody);
-
-        return $responseBody;
+        return $response;
     }
 
     protected function _getCacheKey($route, $params)
