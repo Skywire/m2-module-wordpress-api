@@ -3,7 +3,8 @@
     "description": "Wordpress integration",
     "require": {
         "php": "~7.0.0|~7.1.0",
-        "magento/magento-composer-installer": "*"
+        "magento/magento-composer-installer": "*",
+        "skywire/testframework":"*"
     },
     "type": "magento2-module",
     "version": "0.2.6",
