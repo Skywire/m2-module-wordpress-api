@@ -1,0 +1,40 @@
+{
+  "id": 11,
+  "count": 7,
+  "description": "Rem recusandae velit et incidunt labore qui explicabo veritatis eos quod dolor dolor occaecati nobis in suscipit et quo impedit repellat eius voluptatem",
+  "link": "https:\/\/demo.wp-api.org\/category\/facilis-dignissimos\/",
+  "name": "Facilis dignissimos",
+  "slug": "facilis-dignissimos",
+  "taxonomy": "category",
+  "parent": 0,
+  "meta": [],
+  "_links": {
+    "self": [
+      {
+        "href": "https:\/\/demo.wp-api.org\/wp-json\/wp\/v2\/categories\/11"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https:\/\/demo.wp-api.org\/wp-json\/wp\/v2\/categories"
+      }
+    ],
+    "about": [
+      {
+        "href": "https:\/\/demo.wp-api.org\/wp-json\/wp\/v2\/taxonomies\/category"
+      }
+    ],
+    "wp:post_type": [
+      {
+        "href": "https:\/\/demo.wp-api.org\/wp-json\/wp\/v2\/posts?categories=11"
+      }
+    ],
+    "curies": [
+      {
+        "name": "wp",
+        "href": "https:\/\/api.w.org\/{rel}",
+        "templated": true
+      }
+    ]
+  }
+}

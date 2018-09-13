@@ -1,0 +1,62 @@
+sudo: required
+ist: trusty
+addons:
+  apt:
+    packages:
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
+    - postfix
+    - jq
+    - nodejs
+language: php
+php:
+- 7.1
+env:
+  global:
+  - COMPOSER_BIN_DIR=~/bin
+  - INTEGRATION_SETS=1
+  matrix:
+  - MAGE_VERSION=2.2.5
+    - TEST_SUITE=integration INTEGRATION_INDEX=1
+cache:
+  apt: true
+  directories: $HOME/.composer/cache
+before_install:
+# Prepare env variable for current composer module
+- export MODULE_UNDER_TEST_COMPOSER_NAME=`jq -r .name composer.json`
+# Ensure our module is copied rather than symlinked, or templates wont work
+- export COMPOSER_MIRROR_PATH_REPOS=1
+# Copy repo into subdir, so that composer can install it
+- rsync -av . ./module
+# Download Magento
+- wget https://github.com/magento/magento2/archive/${MAGE_VERSION}.zip
+- unzip -qq ${MAGE_VERSION}.zip
+- git clone git@github.com:Skywire/m2-travis.git
+- cp -R m2-travis/dev magento2-${MAGE_VERSION}/
+- cd magento2-${MAGE_VERSION}/
+# Install module from local filesystem (module subdir)
+- composer config repositories.module_under_test path ../module
+# add packagist repo for any module dependencies
+- composer config --global --auth http-basic.repo.packagist.com tech@skywire.co.uk ${PACKAGIST_KEY}
+- composer config repositories.repo.packagist.com composer https://repo.packagist.com/skywire/
+# Run before install
+- chmod +x ./dev/travis/skywire_before_install.sh
+- ./dev/travis/skywire_before_install.sh
+install:
+# Install canned
+- npm install -g canned
+# Setup Magento and module
+- echo "{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${MAGENTO_USERNAME}\",\"password\":\"${MAGENTO_PASSWORD}\"}}}" > auth.json
+- composer install --no-interaction --prefer-dist
+- composer config minimum-stability dev
+- composer require $MODULE_UNDER_TEST_COMPOSER_NAME @dev --prefer-source
+# Run canned against the newly installed module
+- nohup canned vendor/skywire/wordpressapi/src/Test/Integration/canned > /dev/null 2>&1 &
+before_script:
+- chmod +x ./dev/travis/skywire_before_script.sh
+- ./dev/travis/skywire_before_script.sh
+script:
+- cd dev/tests/$TEST_SUITE
+- cp ./phpunit.xml.travis ./phpunit.xml
+- phpunit --testsuite Skywire
