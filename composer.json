@@ -7,7 +7,6 @@
         "skywire/testframework":"*"
     },
     "type": "magento2-module",
-    "version": "0.2.6",
     "autoload": {
         "files": [
             "src/registration.php"
