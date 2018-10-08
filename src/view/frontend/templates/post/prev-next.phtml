@@ -1,0 +1,14 @@
+<?php /** @var \Skywire\WordpressApi\Block\Post\PrevNext $block */ ?>
+
+<ul class="post-prev-next">
+    <?php if ($prev = $block->getPrevious()): ?>
+        <li>
+            <a href="<?php echo $block->getPostUrl($prev) ?>"><?php echo __('Previous') ?></a>
+        </li>
+    <?php endif ?>
+    <?php if ($next = $block->getNext()): ?>
+        <li>
+            <a href="<?php echo $block->getPostUrl($next) ?>"><?php echo __('Next') ?></a>
+        </li>
+    <?php endif ?>
+</ul>

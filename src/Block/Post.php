@@ -5,8 +5,8 @@ namespace Skywire\WordpressApi\Block;
 use Magento\Framework\DataObject;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
-use Skywire\WordpressApi\Model\Api\Media;
 use Magento\Store\Model\ScopeInterface;
+use Skywire\WordpressApi\Model\Api\Media;
 
 class Post
     extends \Magento\Framework\View\Element\Template
@@ -38,7 +38,7 @@ class Post
      */
     protected function _prepareLayout()
     {
-        if($post = $this->getPost()) {
+        if ($post = $this->getPost()) {
             if ($breadcrumbsBlock = $this->getLayout()->getBlock('breadcrumbs')) {
                 $title = $post->getTitle()->getRendered();
                 $breadcrumbsBlock->addCrumb(
@@ -46,7 +46,7 @@ class Post
                     [
                         'label' => __('Home'),
                         'title' => __('Home'),
-                        'link' => $this->_storeManager->getStore()->getBaseUrl()
+                        'link'  => $this->_storeManager->getStore()->getBaseUrl()
                     ]
                 );
                 $breadcrumbsBlock->addCrumb(
@@ -56,7 +56,7 @@ class Post
                             ScopeInterface::SCOPE_STORE)),
                         'title' => __($this->_scopeConfig->getValue('skywire_wordpress_api/api/nav_name',
                             ScopeInterface::SCOPE_STORE)),
-                        'link' => $this->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
+                        'link'  => $this->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
                             ScopeInterface::SCOPE_STORE))
                     ]
                 );
@@ -69,6 +69,7 @@ class Post
                 );
             }
         }
+
         return parent::_prepareLayout();
     }
 
@@ -83,12 +84,18 @@ class Post
     }
 
     /**
+     * @param DataObject|null $post
+     *
      * @return string
      */
-    public function getPostUrl()
+    public function getPostUrl(DataObject $post = null)
     {
+        if (!$post) {
+            $post = $this->getPost();
+        }
+
         return $this->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
-            ScopeInterface::SCOPE_STORE) . '/' . $this->getPost()->getSlug());
+                ScopeInterface::SCOPE_STORE) . '/' . $post->getSlug());
     }
 
     public function getFeaturedImage()
