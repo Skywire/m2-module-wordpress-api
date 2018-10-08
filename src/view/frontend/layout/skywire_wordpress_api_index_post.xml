@@ -11,6 +11,7 @@
                 </action>
                 <block class="Skywire\WordpressApi\Block\Post" name="skywire_wordpressapi.post.renderer" template="Skywire_WordpressApi::sibling/post.phtml"/>
             </block>
+            <block class="Skywire\WordpressApi\Block\Post\PrevNext" name="post.previous.next" template="Skywire_WordpressApi::post/prev-next.phtml" />
         </referenceContainer>
     </body>
 </page>
