@@ -1,9 +1,6 @@
 <?php
 
-namespace Skywire\WordpressApi\Controller\Index;
-
-
-use Skywire\WordpressApi\Test\Integration\Controller\AbstractControllerTest;
+namespace Skywire\WordpressApi\Model;
 
 /**
  *
@@ -30,14 +27,10 @@ use Skywire\WordpressApi\Test\Integration\Controller\AbstractControllerTest;
  * @license   Skywire Licence http://skywire.co.uk/skywire/license/
  * @link      http://skywire.co.uk
  */
-class CategoryTest extends AbstractControllerTest
+class RestClientFactory
 {
-    public function testExecute()
+    public function create()
     {
-        $this->markTestSkipped();
-        $this->dispatch('blog/aut-architecto-nihil');
-        $response = $this->getResponse();
-        $this->assertContains('aut-architecto-nihil', $response->getBody());
+        return new \Zend_Rest_Client();
     }
-
 }

@@ -3,6 +3,7 @@
     <body>
         <referenceContainer name="content">
             <block class="Skywire\WordpressApi\Block\Category" name="skywire_wordpressapi.category" template="Skywire_WordpressApi::category.phtml">
+                <block class="Skywire\WordpressApi\Block\MegaMenu" name="blog.mega.menu" />
                 <block class="Skywire\WordpressApi\Block\Post" name="skywire_wordpressapi.post.renderer" template="Skywire_WordpressApi::category/post.phtml"/>
                 <block class="Skywire\WordpressApi\Block\Category\Pagination" name="skywire_wordpressapi.category.pagination" as="pagination" template="Skywire_WordpressApi::category/pagination.phtml"/>
             </block>
