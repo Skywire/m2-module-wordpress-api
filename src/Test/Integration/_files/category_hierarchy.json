@@ -1,0 +1,232 @@
+[
+  {
+    "id": 17,
+    "count": 0,
+    "description": "",
+    "link": "https:\/\/example.com\/category\/wordpress-api-test\/level-1\/",
+    "name": "Level 1",
+    "slug": "level-1",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories\/17"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/taxonomies\/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories\/16"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/posts?categories=17"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https:\/\/api.w.org\/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "count": 0,
+    "description": "",
+    "link": "https:\/\/example.com\/category\/wordpress-api-test\/level-1-a\/",
+    "name": "Level 1-a",
+    "slug": "level-1-a",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories\/19"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/taxonomies\/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories\/16"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/posts?categories=19"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https:\/\/api.w.org\/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 18,
+    "count": 0,
+    "description": "",
+    "link": "https:\/\/example.com\/category\/wordpress-api-test\/level-1\/level-2\/",
+    "name": "Level 2",
+    "slug": "level-2",
+    "taxonomy": "category",
+    "parent": 17,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories\/18"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/taxonomies\/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories\/17"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/posts?categories=18"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https:\/\/api.w.org\/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 21,
+    "count": 0,
+    "description": "",
+    "link": "https:\/\/example.com\/category\/wordpress-api-test\/level-1\/level-3\/",
+    "name": "Level 3",
+    "slug": "level-3",
+    "taxonomy": "category",
+    "parent": 18,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v3\/categories\/21"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v3\/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v3\/taxonomies\/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https:\/\/example.com\/wp-json\/wp\/v3\/categories\/18"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v3\/posts?categories=21"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https:\/\/api.w.org\/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 20,
+    "count": 0,
+    "description": "",
+    "link": "https:\/\/example.com\/category\/wordpress-api-test\/level-1-a\/level-2-a\/",
+    "name": "Level 2-a",
+    "slug": "level-2-a",
+    "taxonomy": "category",
+    "parent": 19,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories\/20"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/taxonomies\/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/categories\/19"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https:\/\/example.com\/wp-json\/wp\/v2\/posts?categories=20"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https:\/\/api.w.org\/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]

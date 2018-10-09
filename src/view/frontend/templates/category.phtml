@@ -1,7 +1,11 @@
 <?php /* @var \Skywire\WordpressApi\Block\Category $block */ ?>
 
+
 <div class="archive">
     <main class="site-main">
+
+        <?php echo $block->getChildHtml('blog.mega.menu') ?>
+
         <?php foreach ($block->getPosts() as $post): ?>
             <?php echo $block->renderPost($post) ?>
         <?php endforeach; ?>

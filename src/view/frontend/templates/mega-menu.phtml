@@ -1,0 +1,26 @@
+<?php /** @var \Skywire\WordpressApi\Block\MegaMenu $block */ ?>
+
+<ul class="blog-latest">
+    <?php foreach ($block->getLatest() as $post): ?>
+        <li>
+            <a href="<?php echo $block->getPostUrl($post) ?>"><?php echo $post->getTitle()->getRendered() ?></a>
+        </li>
+    <?php endforeach ?>
+</ul>
+
+<ul class="blog-categories">
+    <?php foreach ($block->getCategories() as $category): ?>
+        <li class="level-0">
+            <a href="<?php echo $block->getCategoryUrl($category) ?>"><?php echo $category->getName() ?></a>
+            <?php if (count($category->getChildren())): ?>
+                <ul>
+                    <?php foreach ($category->getChildren() as $child): ?>
+                        <li class="level-1">
+                            <a href="<?php echo $block->getCategoryUrl($child) ?>"><?php echo $child->getName() ?></a>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            <?php endif ?>
+        </li>
+    <?php endforeach ?>
+</ul>

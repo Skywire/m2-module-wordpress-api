@@ -22,10 +22,11 @@ namespace Skywire\WordpressApi\Model\Api;
  */
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Skywire\WordpressApi\Model\Data\Collection;
-use Skywire\WordpressApi\Model\Data\CollectionFactory;
 use Magento\Framework\DataObject;
 use Magento\Store\Model\ScopeInterface;
+use Skywire\WordpressApi\Model\Data\Collection;
+use Skywire\WordpressApi\Model\Data\CollectionFactory;
+use Skywire\WordpressApi\Model\RestClientFactory;
 
 /**
  * Description of class
@@ -45,6 +46,11 @@ abstract class ApiAbstract
     protected $restClient;
 
     /**
+     * @var RestClientFactory
+     */
+    protected $restClientFactory;
+
+    /**
      * @var ScopeConfigInterface
      */
     private $scopeConfig;
@@ -62,11 +68,13 @@ abstract class ApiAbstract
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         CollectionFactory $collectionFactory,
-        Cache $cache
+        Cache $cache,
+        RestClientFactory $restClientFactory
     ) {
         $this->scopeConfig       = $scopeConfig;
         $this->collectionFactory = $collectionFactory;
         $this->cache             = $cache;
+        $this->restClientFactory = $restClientFactory;
     }
 
     /**
@@ -177,7 +185,7 @@ abstract class ApiAbstract
             return unserialize($cached);
         }
 
-        $client = $this->_getRestClient();
+        $client = $this->getRestClient();
         $client->getHttpClient()->resetParameters();
         $this->_applyAuth($client);
 
@@ -204,10 +212,10 @@ abstract class ApiAbstract
     /**
      * @return \Zend_Rest_Client
      */
-    protected function _getRestClient()
+    public function getRestClient()
     {
         if (!$this->restClient) {
-            $client     = new \Zend_Rest_Client();
+            $client     = $this->restClientFactory->create();
             $httpClient = $client->getHttpClient();
             $httpClient->setHeaders(array('Content-Type: application/json'));
             $httpClient->setConfig(array(
