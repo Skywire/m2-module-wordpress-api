@@ -7,6 +7,7 @@ use DateTime;
 use Magento\Framework\DataObject;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
+use Skywire\WordpressApi\Helper\RequestHelper;
 use Skywire\WordpressApi\Model\Api\ApiException;
 use Skywire\WordpressApi\Model\Api\Category as CategoryApi;
 use Skywire\WordpressApi\Model\Api\Media;
@@ -51,17 +52,24 @@ class MegaMenu extends Post
      */
     protected $categoryApi;
 
+    /**
+     * @var RequestHelper
+     */
+    protected $requestHelper;
+
     public function __construct(
         Template\Context $context,
         Registry $registry,
         Media $mediaApi,
         PostApi $postApi,
         CategoryApi $categoryApi,
+        RequestHelper $requestHelper,
         array $data = []
     ) {
         parent::__construct($context, $registry, $mediaApi, $data);
-        $this->postApi     = $postApi;
-        $this->categoryApi = $categoryApi;
+        $this->postApi       = $postApi;
+        $this->categoryApi   = $categoryApi;
+        $this->requestHelper = $requestHelper;
     }
 
     /**
@@ -69,7 +77,7 @@ class MegaMenu extends Post
      */
     public function getLatest()
     {
-        $now    = new DateTime();
+        $now = new DateTime();
         try {
             $latest = $this->postApi->getCollection(
                 [
@@ -105,6 +113,41 @@ class MegaMenu extends Post
         }
 
         return $categories->getItemsByColumnValue('parent', 0);
+    }
+
+    /**
+     * Get the title of the current category, if not in a category return 'Latest Posts'
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        $category = $this->getCurrentCategory();
+        if ($category) {
+            return $category->getName();
+        }
+
+        return 'Latest Posts';
+    }
+
+    /**
+     * @return bool|DataObject
+     */
+    public function getCurrentCategory()
+    {
+        if ($this->getRequest()->getActionName() !== 'category') {
+            return false;
+        }
+        
+        $slug = $this->requestHelper->getSlug($this->getRequest());
+
+        $category = $this->categoryApi->getCollection(['slug' => $slug])->getFirstItem();
+
+        if ($category && $category->getId()) {
+            return $category;
+        }
+
+        return false;
     }
 
     /**
