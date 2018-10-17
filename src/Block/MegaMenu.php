@@ -114,7 +114,7 @@ class MegaMenu extends Post
         }
 
         foreach ($allCategories as $category) {
-            $children = $categories->getItemsByColumnValue('parent', $category->getId());
+            $children = $this->categoryApi->getCollection(['parent' => $category->getId(), 'page_size' => 999]);
             $category->setChildren($children);
         }
 
