@@ -101,13 +101,19 @@ class MegaMenu extends Post
      */
     public function getCategories()
     {
+        $allCategories = [];
+        $page          = 1;
         try {
-            $categories = $this->categoryApi->getCollection();
+            do {
+                $categories    = $this->categoryApi->getCollection(['page' => $page]);
+                $allCategories += $categories->getItems();
+                ++$page;
+            } while ($page <= $categories->getLastPageNumber());
         } catch (ApiException $e) {
             return [];
         }
 
-        foreach ($categories as $category) {
+        foreach ($allCategories as $category) {
             $children = $categories->getItemsByColumnValue('parent', $category->getId());
             $category->setChildren($children);
         }
@@ -138,7 +144,7 @@ class MegaMenu extends Post
         if ($this->getRequest()->getActionName() !== 'category') {
             return false;
         }
-        
+
         $slug = $this->requestHelper->getSlug($this->getRequest());
 
         $category = $this->categoryApi->getCollection(['slug' => $slug])->getFirstItem();
