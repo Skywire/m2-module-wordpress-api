@@ -40,6 +40,8 @@ use Skywire\WordpressApi\Model\Api\Post as PostApi;
  */
 class MegaMenu extends Post
 {
+    const UNCATEGORISED_ID = 1;
+
     protected $_template = 'Skywire_WordpressApi::mega-menu.phtml';
 
     /**
@@ -103,9 +105,13 @@ class MegaMenu extends Post
     {
         $allCategories = [];
         $page          = 1;
+        
         try {
             do {
-                $categories    = $this->categoryApi->getCollection(['page' => $page]);
+                $categories    = $this->categoryApi->getCollection([
+                    'page'    => $page,
+                    'exclude' => self::UNCATEGORISED_ID
+                ]);
                 $allCategories += $categories->getItems();
                 ++$page;
             } while ($page <= $categories->getLastPageNumber());
@@ -114,7 +120,12 @@ class MegaMenu extends Post
         }
 
         foreach ($allCategories as $category) {
-            $children = $this->categoryApi->getCollection(['parent' => $category->getId(), 'page_size' => 100]);
+            $children = $this->categoryApi->getCollection(
+                [
+                    'parent'    => $category->getId(),
+                    'page_size' => 100,
+                    'exclude'   => self::UNCATEGORISED_ID
+                ]);
             $category->setChildren($children);
         }
 
