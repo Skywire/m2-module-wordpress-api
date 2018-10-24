@@ -52,12 +52,12 @@ class MegaMenuTest extends TestCase
 
         $this->assertCount(2, $categories);
 
-        $this->assertEquals('Level 1', $categories[0]->getName());
+        $this->assertEquals('Level 1', $categories[17]->getName());
         // TODO Fix test to properly load only the specific children, caused by change in child loading method
 //        $this->assertCount(1, $categories[0]->getChildren());
 //        $this->assertEquals('Level 2', $categories[0]->getChildren()[0]->getName());
 
-        $this->assertEquals('Level 1-a', $categories[1]->getName());
+        $this->assertEquals('Level 1-a', $categories[19]->getName());
         // TODO Fix test to properly load only the specific children, caused by change in child loading method
 //        $this->assertCount(1, $categories[1]->getChildren());
 //        $this->assertEquals('Level 2-a', $categories[1]->getChildren()[0]->getName());

@@ -114,11 +114,18 @@ class MegaMenu extends Post
         }
 
         foreach ($allCategories as $category) {
-            $children = $this->categoryApi->getCollection(['parent' => $category->getId(), 'page_size' => 999]);
+            $children = $this->categoryApi->getCollection(['parent' => $category->getId(), 'page_size' => 100]);
             $category->setChildren($children);
         }
 
-        return $categories->getItemsByColumnValue('parent', 0);
+        $topLevel = array_filter(
+            $allCategories,
+            function ($item) {
+                return $item->getParent() == 0;
+            }
+        );
+
+        return $topLevel;
     }
 
     /**
