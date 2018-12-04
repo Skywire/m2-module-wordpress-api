@@ -74,6 +74,8 @@ class Post
 
             $resultPage = $this->_resultPageFactory->create();
             $resultPage->getConfig()->getTitle()->set($post->getTitle()->getRendered());
+            $resultPage->getConfig()->setDescription(strip_tags($post->getExcerpt()->getRendered()));
+
             return $resultPage;
         }
     }
