@@ -42,7 +42,7 @@ use Skywire\WordpressApi\Model\RestClientFactory;
  */
 abstract class ApiAbstract
 {
-    /** @var  \Zend_Rest_Client */
+    /** @var  \GuzzleHttp\Client */
     protected $restClient;
 
     /**
@@ -186,14 +186,12 @@ abstract class ApiAbstract
         }
 
         $client = $this->getRestClient();
-        $client->getHttpClient()->resetParameters();
-        $this->_applyAuth($client);
 
-        $response     = $client->restGet($route, $params);
-        $responseBody = $response->getBody();
+        $response     = $client->get($route, ['query' => $params]);
+        $responseBody = (string) $response->getBody();
 
-        if ($response->getStatus() !== 200) {
-            throw new ApiException($responseBody, $response->getStatus());
+        if ($response->getStatusCode() !== 200) {
+            throw new ApiException($responseBody, $response->getStatusCode());
         }
 
         $this->cache->save(serialize($response), $cacheKey, [], 3600 * 24);
@@ -210,33 +208,27 @@ abstract class ApiAbstract
     }
 
     /**
-     * @return \Zend_Rest_Client
+     * @return \GuzzleHttp\Client
      */
     public function getRestClient()
     {
         if (!$this->restClient) {
-            $client     = $this->restClientFactory->create();
-            $httpClient = $client->getHttpClient();
-            $httpClient->setHeaders(array('Content-Type: application/json'));
-            $httpClient->setConfig(array(
-                'keepalive' => true,
-                'timeout'   => 10,
-            ));
-            $client->setUri($this->getBaseUri());
+
+            $client = new \GuzzleHttp\Client([
+                'base_uri' => $this->getBaseUri(),
+                'timeout'  => 10,
+                'defaults' => [
+                    'headers' => ['Content-Type' => 'application/json'],
+                    'auth'    => [
+                        $this->scopeConfig->getValue('skywire_wordpress_api/api/username', ScopeInterface::SCOPE_STORE),
+                        $this->scopeConfig->getValue('skywire_wordpress_api/api/password', ScopeInterface::SCOPE_STORE)
+                    ],
+                ]
+            ]);
 
             $this->restClient = $client;
         }
 
         return $this->restClient;
-    }
-
-    protected function _applyAuth(\Zend_Rest_Client $client)
-    {
-        $username = $this->scopeConfig->getValue('skywire_wordpress_api/api/username', ScopeInterface::SCOPE_STORE);
-        $password = $this->scopeConfig->getValue('skywire_wordpress_api/api/password', ScopeInterface::SCOPE_STORE);
-
-        if ($username && $password) {
-            $client->getHttpClient()->setAuth($username, $password);
-        }
     }
 }
