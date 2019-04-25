@@ -31,6 +31,6 @@ class RestClientFactory
 {
     public function create()
     {
-        return new \Zend_Rest_Client();
+        return new \GuzzleHttp\Client();
     }
 }
