@@ -27,6 +27,8 @@ use Magento\Store\Model\ScopeInterface;
 use Skywire\WordpressApi\Model\Data\Collection;
 use Skywire\WordpressApi\Model\Data\CollectionFactory;
 use Skywire\WordpressApi\Model\RestClientFactory;
+use function GuzzleHttp\Psr7\str;
+use function GuzzleHttp\Psr7\parse_response;
 
 /**
  * Description of class
@@ -175,14 +177,14 @@ abstract class ApiAbstract
      * @param string $route
      * @param array  $params
      *
-     * @return \Zend_Http_Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     protected function _request($route, $params = [])
     {
         $cacheKey = $this->_getCacheKey($route, $params);
         $cached   = $this->cache->load($cacheKey);
         if ($cached) {
-            return unserialize($cached);
+            return parse_response($cached);
         }
 
         $client = $this->getRestClient();
@@ -194,7 +196,7 @@ abstract class ApiAbstract
             throw new ApiException($responseBody, $response->getStatusCode());
         }
 
-        $this->cache->save(serialize($response), $cacheKey, [], 3600 * 24);
+        $this->cache->save(str($response), $cacheKey, [], 3600 * 24);
 
         return $response;
     }
