@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/Skywire/m2-module-wordpress-api.svg?token=Xc4mNaV8JfLYMxyWpqFq&branch=master)](https://travis-ci.com/Skywire/m2-module-wordpress-api)
 # m2-module-wordpress-api
 
 Wordpress API integration for M2 
