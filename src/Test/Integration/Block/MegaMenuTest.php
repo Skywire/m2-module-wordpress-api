@@ -33,6 +33,11 @@ use Magento\Framework\App\State;
 use Skywire\TestFramework\Integration\TestCase;
 use Skywire\WordpressApi\Model\RestClientFactory;
 
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Client;
+
 class MegaMenuTest extends TestCase
 {
     /**
@@ -108,33 +113,35 @@ class MegaMenuTest extends TestCase
 
     protected function setUp()
     {
-        $this->markTestSkipped('Need to replace zend responses with guzzle mocks');
-        // setup category
-        $response = new \Zend_Http_Response(200, [], $this->getCategoryData());
+        $categoryData = $this->getCategoryData();
+        $mock         = new MockHandler([
+            new Response(200, [], $categoryData),
+            new Response(200, [], $categoryData),
+            new Response(200, [], $categoryData),
+            new Response(200, [], $categoryData),
+            new Response(200, [], $categoryData),
+            new Response(200, [], $categoryData),
+        ]);
 
-        $restClient = $this->getMockBuilder(\GuzzleHttp\Client::class)->disableOriginalConstructor()->getMock();
-        $restClient->method('get')->willReturn($response);
-
-        $clientFactory = $this->getMockBuilder(RestClientFactory::class)->getMock();
-        $clientFactory->method('create')->willReturn($restClient);
+        $handler = HandlerStack::create($mock);
+        $restClient = new Client(['handler' => $handler]);
 
         $categoryApi = $this->objectManager->create(\Skywire\WordpressApi\Model\Api\Category::class,
-            ['restClientFactory' => $clientFactory]);
+            ['restClient' => $restClient]);
 
         $this->categoryApi = $categoryApi;
 
-        // setup posts
-        $response = new \Zend_Http_Response(200, [], $this->getLatestData());
+        $mock         = new MockHandler([
+            new Response(200, [], $this->getLatestData()),
+        ]);
 
-        $restClient = $this->getMockBuilder(\GuzzleHttp\Client::class)->disableOriginalConstructor()->getMock();
-        $restClient->method('get')->willReturn($response);
+        $handler = HandlerStack::create($mock);
+        $restClient = new Client(['handler' => $handler]);
 
-        $clientFactory = $this->getMockBuilder(RestClientFactory::class)->getMock();
-        $clientFactory->method('create')->willReturn($restClient);
-
-        $postApi = $this->objectManager->create(\Skywire\WordpressApi\Model\Api\Post::class,
-            ['restClientFactory' => $clientFactory]);
+        $postApi= $this->objectManager->create(\Skywire\WordpressApi\Model\Api\Post::class,
+            ['restClient' => $restClient]);
 
         $this->postApi = $postApi;
+
     }
 }
