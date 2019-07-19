@@ -26,9 +26,8 @@ use Magento\Framework\DataObject;
 use Magento\Store\Model\ScopeInterface;
 use Skywire\WordpressApi\Model\Data\Collection;
 use Skywire\WordpressApi\Model\Data\CollectionFactory;
-use Skywire\WordpressApi\Model\RestClientFactory;
-use function GuzzleHttp\Psr7\str;
 use function GuzzleHttp\Psr7\parse_response;
+use function GuzzleHttp\Psr7\str;
 
 /**
  * Description of class
@@ -46,11 +45,6 @@ abstract class ApiAbstract
 {
     /** @var  \GuzzleHttp\Client */
     protected $restClient;
-
-    /**
-     * @var RestClientFactory
-     */
-    protected $restClientFactory;
 
     /**
      * @var ScopeConfigInterface
@@ -71,12 +65,15 @@ abstract class ApiAbstract
         ScopeConfigInterface $scopeConfig,
         CollectionFactory $collectionFactory,
         Cache $cache,
-        RestClientFactory $restClientFactory
+        $restClient = null
     ) {
         $this->scopeConfig       = $scopeConfig;
         $this->collectionFactory = $collectionFactory;
         $this->cache             = $cache;
-        $this->restClientFactory = $restClientFactory;
+
+        if ($restClient) {
+            $this->restClient = $restClient;
+        }
     }
 
     /**
@@ -91,8 +88,9 @@ abstract class ApiAbstract
         $collection = $this->_createCollection(\Zend_Json::decode($response->getBody()));
 
         if ($totalPages = $response->getHeader('X-WP-TotalPages')) {
-            if(is_array($totalPages))
+            if (is_array($totalPages)) {
                 $totalPages = $totalPages[0];
+            }
             $collection->setLastPageNumber($totalPages);
         }
 
@@ -192,7 +190,7 @@ abstract class ApiAbstract
         $client = $this->getRestClient();
 
         $response     = $client->get($route, ['query' => $params]);
-        $responseBody = (string) $response->getBody();
+        $responseBody = (string)$response->getBody();
 
         if ($response->getStatusCode() !== 200) {
             throw new ApiException($responseBody, $response->getStatusCode());

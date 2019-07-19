@@ -34,7 +34,6 @@ class CategoryTest extends AbstractControllerTest
 {
     public function testExecute()
     {
-        $this->markTestSkipped();
         $this->dispatch('blog/aut-architecto-nihil');
         $response = $this->getResponse();
         $this->assertContains('aut-architecto-nihil', $response->getBody());
