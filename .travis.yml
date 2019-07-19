@@ -20,8 +20,6 @@ env:
   - COMPOSER_BIN_DIR=~/bin
   - INTEGRATION_SETS=1
   matrix:
-  - MAGE_VERSION=2.2.7
-    - TEST_SUITE=integration INTEGRATION_INDEX=1
   - MAGE_VERSION=2.3.1
     - TEST_SUITE=integration INTEGRATION_INDEX=1
 cache:
