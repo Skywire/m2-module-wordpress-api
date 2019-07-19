@@ -1,3 +1,4 @@
+//! customHeader: {"X-WP-TotalPages": "1"}
 [
   {
     "id": 1,
