@@ -1,5 +1,5 @@
 sudo: required
-ist: trusty
+dist: trusty
 addons:
   apt:
     packages:
