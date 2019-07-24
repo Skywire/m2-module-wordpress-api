@@ -40,6 +40,9 @@ before_install:
 - cd magento2-${MAGE_VERSION}/
 # Install module from local filesystem (module subdir)
 - composer config repositories.module_under_test path ../module
+# add packagist repo for any module dependencies
+- composer config --global --auth http-basic.repo.packagist.com tech@skywire.co.uk ${PACKAGIST_KEY}
+- composer config repositories.repo.packagist.com composer https://repo.packagist.com/skywire/
 # Run before install
 - chmod +x ./dev/travis/skywire_before_install.sh
 - ./dev/travis/skywire_before_install.sh
