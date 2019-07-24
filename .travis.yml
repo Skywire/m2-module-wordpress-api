@@ -62,9 +62,10 @@ before_script:
 script:
 - cd dev/tests/$TEST_SUITE
 - cp ./phpunit.xml.travis ./phpunit.xml
-- phpunit  --coverage-clover build/logs/clover.xml --testsuite Skywire
+- phpunit  --coverage-clover ../../../build/logs/clover.xml --testsuite Skywire
 after_success:
 # Run coveralls
+- cd ../../../
 - wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
 - chmod +x php-coveralls.phar
 - travis_retry php php-coveralls.phar -v
