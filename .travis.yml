@@ -56,10 +56,15 @@ install:
 - composer require $MODULE_UNDER_TEST_COMPOSER_NAME @dev --prefer-source
 # Run canned against the newly installed module
 - nohup canned vendor/skywire/wordpressapi/src/Test/Integration/canned > /dev/null 2>&1 &
+# get coveralls
+- wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
+- chmod +x php-coveralls.phar
 before_script:
 - chmod +x ./dev/travis/skywire_before_script.sh
 - ./dev/travis/skywire_before_script.sh
 script:
 - cd dev/tests/$TEST_SUITE
 - cp ./phpunit.xml.travis ./phpunit.xml
-- phpunit --testsuite Skywire
+- phpunit  --coverage-clover build/logs/clover.xml --testsuite Skywire
+after_success:
+- travis_retry php php-coveralls.phar -v
