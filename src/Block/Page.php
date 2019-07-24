@@ -1,13 +1,20 @@
 <?php
+/**
+ * Copyright © Skywire Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
 
 namespace Skywire\WordpressApi\Block;
 
 use Magento\Framework\DataObject;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
-use Skywire\WordpressApi\Model\Api\Media;
 use Magento\Store\Model\ScopeInterface;
 
+/**
+ * @package     Skywire\WordpressApi\Block
+ * @author      Skywire Tech Team <tech@skywire.co.uk>
+ */
 class Page
     extends \Magento\Framework\View\Element\Template
 {
@@ -39,7 +46,7 @@ class Page
                 [
                     'label' => __('Home'),
                     'title' => __('Home'),
-                    'link' => $this->_storeManager->getStore()->getBaseUrl()
+                    'link'  => $this->_storeManager->getStore()->getBaseUrl()
                 ]
             );
             $breadcrumbsBlock->addCrumb(
@@ -49,7 +56,7 @@ class Page
                         ScopeInterface::SCOPE_STORE)),
                     'title' => __($this->_scopeConfig->getValue('skywire_wordpress_api/api/nav_name',
                         ScopeInterface::SCOPE_STORE)),
-                    'link' => $this->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
+                    'link'  => $this->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
                         ScopeInterface::SCOPE_STORE))
                 ]
             );
@@ -61,6 +68,7 @@ class Page
                 ]
             );
         }
+
         return parent::_prepareLayout();
     }
 

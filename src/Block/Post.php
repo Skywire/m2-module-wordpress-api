@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright © Skywire Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
 
 namespace Skywire\WordpressApi\Block;
 
@@ -8,6 +12,10 @@ use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
 use Skywire\WordpressApi\Model\Api\Media;
 
+/**
+ * @package     Skywire\WordpressApi\Block
+ * @author      Skywire Tech Team <tech@skywire.co.uk>
+ */
 class Post
     extends \Magento\Framework\View\Element\Template
 {

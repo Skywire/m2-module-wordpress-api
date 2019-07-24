@@ -1,44 +1,23 @@
 <?php
 /**
- * Router
- *
- * @copyright Copyright © 2018 ${company}. All rights reserved.
- * @author    ${userEmail}
+ * Copyright © Skywire Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
  */
+
 
 namespace Skywire\WordpressApi\Controller;
 
-/**
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Skywire License
- * that is available through the world-wide-web at this URL:
- * http://skywire.co.uk/skywire/license/
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to interact@skywire.co.uk so we can send you a copy immediately.
- *
- */
 
 use Skywire\WordpressApi\Helper\RequestHelper;
 use Skywire\WordpressApi\Helper\UrlHelper;
 use Skywire\WordpressApi\Model\Api\ApiException;
 use Skywire\WordpressApi\Model\Api\Category;
-use Skywire\WordpressApi\Model\Api\Post;
 use Skywire\WordpressApi\Model\Api\Page;
+use Skywire\WordpressApi\Model\Api\Post;
 
 /**
- * Description of class
- *
- * Further description is required
- *
- * @category  Skywire
- * @package   Skywire_ModuleName
- * @author    Skywire Tech Team <tech@skywire.co.uk>
- * @copyright 2017 Skywire Ltd (http://skywire.co.uk)
- * @license   Skywire Licence http://skywire.co.uk/skywire/license/
- * @link      http://skywire.co.uk
+ * @package     Skywire\WordpressApi\Controller
+ * @author      Skywire Tech Team <tech@skywire.co.uk>
  */
 class Router
     implements \Magento\Framework\App\RouterInterface
