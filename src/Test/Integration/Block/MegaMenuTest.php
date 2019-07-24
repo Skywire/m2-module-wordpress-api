@@ -1,43 +1,24 @@
 <?php
 /**
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Skywire License
- * that is available through the world-wide-web at this URL:
- * http://skywire.co.uk/skywire/license/
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to interact@skywire.co.uk so we can send you a copy immediately.
- *
- */
-
-/**
- * Description of class
- *
- * Further description is required
- *
- * @category  Skywire
- * @package   Skywire\ModuleName
- * @author    Skywire Tech Team <tech@skywire.co.uk>
- * @copyright 2018 Skywire Ltd (http://skywire.co.uk)
- * @license   Skywire Licence http://skywire.co.uk/skywire/license/
- * @link      http://skywire.co.uk
+ * Copyright © Skywire Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
  */
 
 namespace Skywire\WordpressApi\Block;
 
-
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
 use Skywire\TestFramework\Integration\TestCase;
 use Skywire\WordpressApi\Model\RestClientFactory;
 
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Client;
-
+/**
+ * @package     Skywire\WordpressApi\Block
+ * @author      Skywire Tech Team <tech@skywire.co.uk>
+ */
 class MegaMenuTest extends TestCase
 {
     /**
@@ -123,7 +104,7 @@ class MegaMenuTest extends TestCase
             new Response(200, [], $categoryData),
         ]);
 
-        $handler = HandlerStack::create($mock);
+        $handler    = HandlerStack::create($mock);
         $restClient = new Client(['handler' => $handler]);
 
         $categoryApi = $this->objectManager->create(\Skywire\WordpressApi\Model\Api\Category::class,
@@ -131,14 +112,14 @@ class MegaMenuTest extends TestCase
 
         $this->categoryApi = $categoryApi;
 
-        $mock         = new MockHandler([
+        $mock = new MockHandler([
             new Response(200, [], $this->getLatestData()),
         ]);
 
-        $handler = HandlerStack::create($mock);
+        $handler    = HandlerStack::create($mock);
         $restClient = new Client(['handler' => $handler]);
 
-        $postApi= $this->objectManager->create(\Skywire\WordpressApi\Model\Api\Post::class,
+        $postApi = $this->objectManager->create(\Skywire\WordpressApi\Model\Api\Post::class,
             ['restClient' => $restClient]);
 
         $this->postApi = $postApi;

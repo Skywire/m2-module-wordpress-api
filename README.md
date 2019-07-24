@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/Skywire/m2-module-wordpress-api.svg?token=Xc4mNaV8JfLYMxyWpqFq&branch=master)](https://travis-ci.com/Skywire/m2-module-wordpress-api)
-# m2-module-wordpress-api
+
+Skywire Magento 2 Wordpress API
 
 Wordpress API integration for M2 
 
@@ -37,7 +38,7 @@ https://www.advancedcustomfields.com/ is nearly always installed on the WordPres
 
 To add them to the API data customise and add the following code to your active theme's `functions.php`
 
-```php
+```
 /**
  * Add specific Advanced Custom Fields
  * Fields added to meta key of post data
@@ -52,4 +53,4 @@ function wp_api_encode_post_acf($data,$post,$context){
 }
 ```
 
-Theis data can then be used in your post templates .phtml file via `$post->getMeta('footer_call_to_action_link')`
+This data can then be used in your post templates .phtml file via `$post->getMeta('footer_call_to_action_link')`

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright © Skywire Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
 
 namespace Skywire\WordpressApi\Block;
 
@@ -7,6 +11,10 @@ use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 use Skywire\WordpressApi\Model\Api\Media;
 
+/**
+ * @package     Skywire\WordpressApi\Block
+ * @author      Skywire Tech Team <tech@skywire.co.uk>
+ */
 class Sibling
     extends Post
 {

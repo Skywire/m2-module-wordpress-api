@@ -1,19 +1,12 @@
 <?php
-
-namespace Skywire\WordpressApi\Block\Category;
-
 /**
+ * Copyright © Skywire Ltd. All rights reserved.
  *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Skywire License
- * that is available through the world-wide-web at this URL:
- * http://skywire.co.uk/skywire/license/
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to interact@skywire.co.uk so we can send you a copy immediately.
+ * See LICENSE.txt for license details.
  *
  */
+
+namespace Skywire\WordpressApi\Block\Category;
 
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
@@ -21,16 +14,8 @@ use Skywire\WordpressApi\Block\Category;
 use Skywire\WordpressApi\Helper\RequestHelper;
 
 /**
- * Description of class
- *
- * Further description is required
- *
- * @category  Skywire
- * @package   Skywire\ModuleName
- * @author    Skywire Tech Team <tech@skywire.co.uk>
- * @copyright 2018 Skywire Ltd (http://skywire.co.uk)
- * @license   Skywire Licence http://skywire.co.uk/skywire/license/
- * @link      http://skywire.co.uk
+ * @package     Skywire\WordpressApi\Block\Category
+ * @author      Skywire Tech Team <tech@skywire.co.uk>
  */
 class Pagination
     extends Category
@@ -75,6 +60,7 @@ class Pagination
 
     protected function getPageUrl($page)
     {
-        return str_replace('/index', '', $this->getUrl($this->requestHelper->getUrlWithoutPagination($this->getRequest()), ['p' => $page]));
+        return str_replace('/index', '',
+            $this->getUrl($this->requestHelper->getUrlWithoutPagination($this->getRequest()), ['p' => $page]));
     }
 }
