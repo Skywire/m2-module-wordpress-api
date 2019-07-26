@@ -131,7 +131,7 @@ class Router
             'slug' => $identifier
         ]);
 
-        if (!count($posts)) {
+        if (!$posts || empty($posts)) {
             return false;
         }
 
@@ -149,7 +149,7 @@ class Router
             'slug' => $identifier
         ]);
 
-        if (!count($pages)) {
+        if (!$pages || empty($pages)) {
             return false;
         }
 
@@ -167,7 +167,7 @@ class Router
             'slug' => $identifier
         ]);
 
-        if (!count($categories)) {
+        if (!$categories || empty($categories)) {
             return false;
         }
 
