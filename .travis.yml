@@ -64,7 +64,7 @@ before_script:
 script:
 - cd dev/tests/$TEST_SUITE
 - cp ./phpunit.xml.travis ./phpunit.xml
-- phpunit  --coverage-clover ../../../build/logs/clover.xml --testsuite Skywire
+- phpunit  --testsuite Skywire
 after_success:
 # Run coveralls
 - cd ../../../
