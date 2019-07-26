@@ -115,11 +115,8 @@ abstract class ApiAbstract
         return $collection;
     }
 
-    protected function _populateApiData(array $data = [], $targetObject = null)
+    protected function _populateApiData(array $data = [], $targetObject)
     {
-        if (!$targetObject) {
-            $targetObject = $this;
-        }
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $value = $this->_populateApiData($value, new DataObject());
@@ -156,7 +153,8 @@ abstract class ApiAbstract
      * @param string $route
      * @param array  $params
      *
-     * @return \GuzzleHttp\Psr7\Response
+     * @return \GuzzleHttp\Psr7\Response|\Psr\Http\Message\ResponseInterface
+     * @throws ApiException
      */
     protected function _request($route, $params = [])
     {
@@ -168,11 +166,10 @@ abstract class ApiAbstract
 
         $client = $this->getRestClient();
 
-        $response     = $client->get($route, ['query' => $params]);
-        $responseBody = (string)$response->getBody();
-
-        if ($response->getStatusCode() !== 200) {
-            throw new ApiException($responseBody, $response->getStatusCode());
+        try {
+            $response = $client->get($route, ['query' => $params]);
+        } catch (\Throwable $e) {
+            throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
 
         $this->cache->save(str($response), $cacheKey, [], 3600 * 24);
