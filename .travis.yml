@@ -19,6 +19,7 @@ env:
   global:
   - COMPOSER_BIN_DIR=~/bin
   - INTEGRATION_SETS=1
+  - COVERALLS_PARALLEL=true
   matrix:
   - MAGE_VERSION=2.3.1
     - TEST_SUITE=integration INTEGRATION_INDEX=1
@@ -27,6 +28,8 @@ env:
 cache:
   apt: true
   directories: $HOME/.composer/cache
+notifications:
+  webhooks: https://coveralls.io/webhook
 before_install:
 # Prepare env variable for current composer module
 - export MODULE_UNDER_TEST_COMPOSER_NAME=`jq -r .name composer.json`
