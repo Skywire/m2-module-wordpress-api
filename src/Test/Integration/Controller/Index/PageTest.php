@@ -16,9 +16,10 @@ class PageTest extends AbstractControllerTest
 {
     public function testExecute()
     {
-//        $this->markTestSkipped();
         $this->dispatch('blog/sample-page');
         $response = $this->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
         $this->assertContains('sample-page', $response->getBody());
     }
 

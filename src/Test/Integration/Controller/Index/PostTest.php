@@ -18,6 +18,8 @@ class PostTest extends AbstractControllerTest
     {
         $this->dispatch('blog/hello-world');
         $response = $this->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
         $this->assertContains('hello-world', $response->getBody());
     }
 

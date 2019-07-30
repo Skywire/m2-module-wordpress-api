@@ -10,11 +10,11 @@ addons:
     - jq
     - nodejs
 services:
-  - rabbitmq
-  - elasticsearch
+- rabbitmq
+- elasticsearch
 language: php
 php:
-  - 7.2
+- 7.2
 env:
   global:
   - COMPOSER_BIN_DIR=~/bin
