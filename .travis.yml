@@ -19,17 +19,12 @@ env:
   global:
   - COMPOSER_BIN_DIR=~/bin
   - INTEGRATION_SETS=1
-  - COVERALLS_PARALLEL=true
   matrix:
   - MAGE_VERSION=2.3.1
     - TEST_SUITE=integration INTEGRATION_INDEX=1
-  - MAGE_VERSION=2.3.1
-    - TEST_SUITE=unit
 cache:
   apt: true
   directories: $HOME/.composer/cache
-notifications:
-  webhooks: https://coveralls.io/webhook
 before_install:
 # Prepare env variable for current composer module
 - export MODULE_UNDER_TEST_COMPOSER_NAME=`jq -r .name composer.json`
@@ -40,7 +35,7 @@ before_install:
 # Download Magento
 - wget https://github.com/magento/magento2/archive/${MAGE_VERSION}.zip
 - unzip -qq ${MAGE_VERSION}.zip
-- git clone https://github.com/Skywire/m2-travis.git
+- git clone -b combined https://github.com/Skywire/m2-travis.git
 - cp -R m2-travis/dev magento2-${MAGE_VERSION}/
 - cd magento2-${MAGE_VERSION}/
 # Install module from local filesystem (module subdir)
