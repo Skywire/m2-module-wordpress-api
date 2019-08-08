@@ -34,6 +34,7 @@ cache:
   apt: true
   directories: $HOME/.composer/cache
 before_install:
+  - sudo service mysql stop
   # Prepare env variable for current composer module
   - export MODULE_UNDER_TEST_COMPOSER_NAME=`jq -r .name composer.json`
   # Ensure our module is copied rather than symlinked, or templates wont work
