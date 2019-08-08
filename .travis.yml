@@ -11,7 +11,8 @@ addons:
       - nodejs
       # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
       - libgconf-2-4
-#services:
+services:
+  - docker
 #  - rabbitmq
 #  - elasticsearch
 language: php
@@ -57,9 +58,10 @@ install:
   - composer config minimum-stability dev
   - composer require $MODULE_UNDER_TEST_COMPOSER_NAME @dev --prefer-source
   # Install docker
-  - git submodule add -b master https://github.com/Skywire/skywire-docker.git .docker-install
+  - git submodule add -b master https://$GITHUB_USER:$GITHUB_TOKEN@github.com/Skywire/skywire-docker.git .docker-install
   - git submodule init
   - cd .docker-install
+  - pip install --upgrade pip
   - pip install -r requirements.txt
   - python install.py --install-path ../ --domain travisgento.com --mage 2 --php 72 --redis --rabbitmq --elasticsearch --ioncube
   - cd ../
