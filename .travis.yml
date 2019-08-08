@@ -11,6 +11,9 @@ addons:
       - nodejs
       # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
       - libgconf-2-4
+  hosts:
+    - travisgento.com
+    - travisgento_mysql
 services:
   - docker
 #  - rabbitmq
@@ -61,8 +64,7 @@ install:
   - git submodule add -b master https://$GITHUB_USER:$GITHUB_TOKEN@github.com/Skywire/skywire-docker.git .docker-install
   - git submodule init
   - cd .docker-install
-  - pip install --upgrade pip
-  - pip install -r requirements.txt
+  - sudo pip install -r requirements.txt
   - python install.py --install-path ../ --domain travisgento.com --mage 2 --php 72 --redis --rabbitmq --elasticsearch --ioncube
   - cd ../
   # Install canned
