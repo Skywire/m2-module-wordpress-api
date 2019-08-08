@@ -60,6 +60,7 @@ install:
   - git submodule add -b master https://github.com/Skywire/skywire-docker.git .docker-install
   - git submodule init
   - cd .docker-install
+  - pip install -r requirements.txt
   - python install.py --install-path ../ --domain travisgento.com --mage 2 --php 72 --redis --rabbitmq --elasticsearch --ioncube
   - cd ../
   # Install canned
