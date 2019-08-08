@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://localhost",
+  "baseUrl": "http://docker.travisgento.com",
   "integrationFolder": "vendor/skywire/wordpressapi/src/Test/Cypress",
   "projectId": "3rzxk9"
 }

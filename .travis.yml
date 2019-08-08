@@ -3,17 +3,17 @@ dist: trusty
 addons:
   apt:
     packages:
-      - mysql-server-5.6
-      - mysql-client-core-5.6
-      - mysql-client-5.6
+#      - mysql-server-5.6
+#      - mysql-client-core-5.6
+#      - mysql-client-5.6
       - postfix
       - jq
       - nodejs
       # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
       - libgconf-2-4
-services:
-  - rabbitmq
-  - elasticsearch
+#services:
+#  - rabbitmq
+#  - elasticsearch
 language: php
 php:
   - 7.2
@@ -56,31 +56,35 @@ install:
   - composer install --no-interaction --prefer-dist
   - composer config minimum-stability dev
   - composer require $MODULE_UNDER_TEST_COMPOSER_NAME @dev --prefer-source
-
+  # Install docker
+  - git submodule add -b master https://github.com/Skywire/skywire-docker.git .docker-install
+  - git submodule init
+  - cd .docker-install
+  - python install.py --install-path ../ --domain travisgento.com --mage 2 --php 72 --redis --rabbitmq --elasticsearch --ioncube
+  - cd ../
   # Install canned
   - npm install -g canned
   # Run canned against the newly installed module
   - nohup canned vendor/skywire/wordpressapi/src/Test/Integration/canned > /dev/null 2>&1 &
   # Install cypress
   - npm install cypress --save-dev
+
 before_script:
   - chmod +x ./dev/travis/skywire_before_script.sh
   - ./dev/travis/skywire_before_script.sh
 
+  # Start docker
+  - docker-compose up -d
   # install Magento
-  - php bin/magento setup:install --base-url=http://127.0.0.1/ --db-host=127.0.0.1 --db-name=magento_integration_tests --db-user=root --db-password="" --admin-firstname=Magento --admin-lastname=User --admin-email=user@example.com --admin-user=admin --admin-password=admin123 --language=en_GB --currency=GBP --timezone=Europe/London --cleanup-database --sales-order-increment-prefix="ORD$" --session-save=db
-
-  - php -S 127.0.0.1 -t ./pub &
+  - php bin/magento setup:install --base-url=http://travisgento.com/ --db-host=travisgento_mysql --db-name=magento_integration_tests --db-user=root --db-password="" --admin-firstname=Magento --admin-lastname=User --admin-email=user@example.com --admin-user=admin --admin-password=admin123 --language=en_GB --currency=GBP --timezone=Europe/London --cleanup-database --sales-order-increment-prefix="ORD$" --session-save=db
 script:
   # Start cypress tests
-  - php bin/magento config:set web/unsecure/base_url http://127.0.0.1/
-  - php bin/magento config:set web/secure/base_url http://127.0.0.1/
   - php bin/magento config:set skywire_wordpress_api/api/base_url http://127.0.0.1:3000
   - php bin/magento config:set skywire_wordpress_api/api/path ""
   - cp ../cypress.json ./cypress.json
   - ./node_modules/.bin/cypress run --record
-after_success:
-  # Run coveralls
-  - wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
-  - chmod +x php-coveralls.phar
-  - travis_retry php php-coveralls.phar -v
+#after_success:
+#  # Run coveralls
+#  - wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
+#  - chmod +x php-coveralls.phar
+#  - travis_retry php php-coveralls.phar -v
