@@ -77,8 +77,8 @@ install:
   - npm install cypress --save-dev
 
 before_script:
-  - chmod +x ./dev/travis/skywire_before_script.sh
-  - ./dev/travis/skywire_before_script.sh
+#  - chmod +x ./dev/travis/skywire_before_script.sh
+#  - ./dev/travis/skywire_before_script.sh
 
   # Start docker
   - docker-compose up -d
