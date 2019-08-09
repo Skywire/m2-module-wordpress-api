@@ -58,9 +58,10 @@ before_install:
 install:
   # Setup Magento and module
   - echo "{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${MAGENTO_USERNAME}\",\"password\":\"${MAGENTO_PASSWORD}\"}}}" > auth.json
-  - composer install --no-interaction --prefer-dist
-  - composer config minimum-stability dev
-  - composer require $MODULE_UNDER_TEST_COMPOSER_NAME @dev --prefer-source
+#  - composer config minimum-stability dev
+  - composer require --no-update $MODULE_UNDER_TEST_COMPOSER_NAME @dev --prefer-source
+#  - composer install --no-interaction --prefer-dist
+  - composer install --no-interaction
   # Install docker
   - git submodule add -b master https://$GITHUB_USER:$GITHUB_TOKEN@github.com/Skywire/skywire-docker.git .docker-install
   - git submodule init
