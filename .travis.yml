@@ -83,7 +83,7 @@ before_script:
   # Start docker
   - docker-compose up -d
   # install Magento
-  - mysql -h travisgento_mysql -u root --password=$MYSQL_PASS -e "CREATE DATABASE magento_integration_tests"
+  - mysql -u root --password=$MYSQL_PASS -e "CREATE DATABASE magento_integration_tests"
   - php bin/magento setup:install --base-url=http://travisgento.com/ --db-host=travisgento_mysql --db-name=magento_integration_tests --db-user=root --db-password=$MYSQL_PASS --admin-firstname=Magento --admin-lastname=User --admin-email=user@example.com --admin-user=admin --admin-password=admin123 --language=en_GB --currency=GBP --timezone=Europe/London --cleanup-database --sales-order-increment-prefix="ORD$" --session-save=db
 script:
   # Start cypress tests
