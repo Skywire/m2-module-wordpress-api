@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.com/Skywire/m2-module-wordpress-api.svg?token=Xc4mNaV8JfLYMxyWpqFq&branch=master)](https://travis-ci.com/Skywire/m2-module-wordpress-api)
 [![Coverage Status](https://coveralls.io/repos/github/Skywire/m2-module-wordpress-api/badge.svg?branch=master)](https://coveralls.io/github/Skywire/m2-module-wordpress-api?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/skywire/wordpressapi/v/stable)](https://packagist.org/packages/skywire/wordpressapi)
+[![Total Downloads](https://poser.pugx.org/skywire/wordpressapi/downloads)](https://packagist.org/packages/skywire/wordpressapi)
 
 Skywire Magento 2 Wordpress API
 
