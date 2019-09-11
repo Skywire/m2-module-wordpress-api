@@ -172,7 +172,7 @@ abstract class ApiAbstract
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
 
-        $this->cache->save(str($response), $cacheKey, [], 3600 * 24);
+        $this->cache->save(str($response), $cacheKey, [], $this->scopeConfig->getValue('skywire_wordpress_api/api/cache_ttl'));
 
         return $response;
     }

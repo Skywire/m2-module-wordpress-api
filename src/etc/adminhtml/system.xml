@@ -29,9 +29,13 @@
                     <label>Username</label>
                     <comment>HTTP Auth Username</comment>
                 </field>
-                <field id="password" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="password" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Password</label>
                     <comment>HTTP Auth Password</comment>
+                </field>
+                <field id="cache_ttl" translate="label" type="text" sortOrder="30" showInDefault="1">
+                    <label>Cache Lifetime</label>
+                    <comment>Cache TTL in seconds</comment>
                 </field>
             </group>
             <group id="pagination" translate="label" type="text" sortOrder="20" showInDefault="1">
