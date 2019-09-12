@@ -131,7 +131,7 @@ class Router
             'slug' => $identifier
         ]);
 
-        if (!$posts || empty($posts)) {
+        if (!$posts || !$posts->getSize()) {
             return false;
         }
 
@@ -149,7 +149,7 @@ class Router
             'slug' => $identifier
         ]);
 
-        if (!$pages || empty($pages)) {
+        if (!$pages || !$pages->getSize()) {
             return false;
         }
 
@@ -167,7 +167,7 @@ class Router
             'slug' => $identifier
         ]);
 
-        if (!$categories || empty($categories)) {
+        if (!$categories || !$categories->getSize()) {
             return false;
         }
 
