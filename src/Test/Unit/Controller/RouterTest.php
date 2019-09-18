@@ -39,9 +39,13 @@ class RouterTest extends TestCase
 
     private $actionFactory;
 
+    private $collectionWithData;
+
+    private $collectionWithoutData;
+
     public function testPostMatch()
     {
-        $this->postApi->method('getCollection')->willReturn(['page', 'page2']);
+        $this->postApi->method('getCollection')->willReturn($this->collectionWithData);
 
         $matched = $this->router->match($this->request);
 
@@ -50,7 +54,7 @@ class RouterTest extends TestCase
 
     public function testPostUnmatched()
     {
-        $this->postApi->method('getCollection')->willReturn([]);
+        $this->postApi->method('getCollection')->willReturn($this->collectionWithoutData);
 
         $matched = $this->router->match($this->request);
 
@@ -59,7 +63,7 @@ class RouterTest extends TestCase
 
     public function testCategoryMatch()
     {
-        $this->categoryApi->method('getCollection')->willReturn(['page', 'page2']);
+        $this->categoryApi->method('getCollection')->willReturn($this->collectionWithData);
 
         $matched = $this->router->match($this->request);
 
@@ -68,7 +72,7 @@ class RouterTest extends TestCase
 
     public function testCategoryUnmatched()
     {
-        $this->categoryApi->method('getCollection')->willReturn([]);
+        $this->categoryApi->method('getCollection')->willReturn($this->collectionWithoutData);
 
         $matched = $this->router->match($this->request);
 
@@ -77,7 +81,7 @@ class RouterTest extends TestCase
 
     public function testPageMatch()
     {
-        $this->pageApi->method('getCollection')->willReturn(['page', 'page2']);
+        $this->pageApi->method('getCollection')->willReturn($this->collectionWithData);
 
         $matched = $this->router->match($this->request);
 
@@ -86,7 +90,7 @@ class RouterTest extends TestCase
 
     public function testPageUnmatched()
     {
-        $this->pageApi->method('getCollection')->willReturn([]);
+        $this->pageApi->method('getCollection')->willReturn($this->collectionWithoutData);
 
         $matched = $this->router->match($this->request);
 
@@ -101,6 +105,10 @@ class RouterTest extends TestCase
         $requestHelper     = $this->getMockBuilder(RequestHelper::class)->setMethods(['getSlug', 'getCurrentPage'])->getMock();
         $requestHelper->method('getSlug')->willReturn('slug');
         $requestHelper->method('getCurrentPage')->willReturn('1');
+
+        $this->collectionWithData = $this->objectManager->getCollectionMock(\Skywire\WordpressApi\Model\Data\Collection::class, ['page1', 'page2']);
+        $this->collectionWithData->method('getSize')->willReturn(2);
+        $this->collectionWithoutData = $this->objectManager->getCollectionMock(\Skywire\WordpressApi\Model\Data\Collection::class, []);
 
         $this->actionFactory = $this->getMockBuilder(\Magento\Framework\App\ActionFactory::class)->disableOriginalConstructor()->setMethods(['create'])->getMock();
         $this->actionFactory->method('create')->willReturn($this->objectManager->getObject(Forward::class));
