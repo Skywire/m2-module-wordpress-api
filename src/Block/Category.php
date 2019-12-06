@@ -88,7 +88,20 @@ class Category
     /** @return DataObject */
     public function getCategory()
     {
+        if($this->getData('category')) {
+            return $this->getData('category');
+        }
         return $this->registry->registry('current_category');
+    }
+
+    /**
+     * @param $category
+     *
+     * @return $this
+     */
+    public function setCategory($category) {
+        $this->setData('category' , $category);
+        return $this;
     }
 
     public function getPosts()
