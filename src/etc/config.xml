@@ -12,6 +12,9 @@
             <pagination>
                 <posts_per_page>10</posts_per_page>
             </pagination>
+            <indexing>
+                <cron_schedule>0 0 * * *</cron_schedule>
+            </indexing>
         </skywire_wordpress_api>
     </default>
 </config>

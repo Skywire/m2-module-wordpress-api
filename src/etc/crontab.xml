@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="wordpress_api_path_index" instance="Skywire\WordpressApi\Model\Index\Indexer" method="collectPaths">
+            <config_path>skywire_wordpress_api/indexing/cron_schedule</config_path>
+        </job>
+    </group>
+</config>

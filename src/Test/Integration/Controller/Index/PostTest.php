@@ -14,6 +14,9 @@ use Skywire\WordpressApi\Test\Integration\Controller\AbstractControllerTest;
  */
 class PostTest extends AbstractControllerTest
 {
+    /**
+     * @magentoDataFixture populateIndex
+     */
     public function testExecute()
     {
         $this->dispatch('blog/hello-world');

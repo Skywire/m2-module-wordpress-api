@@ -20,4 +20,9 @@ abstract class AbstractControllerTest extends \Magento\TestFramework\TestCase\Ab
         $config->saveConfig('skywire_wordpress_api/api/path', null, 'default');
         $config->saveConfig('skywire_wordpress_api/api/base_url', 'http://localhost:3000', 'default');
     }
+
+    public static function populateIndex()
+    {
+        require realpath(__DIR__ . '/../_files/populate_index.php');
+    }
 }

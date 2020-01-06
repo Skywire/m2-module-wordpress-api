@@ -57,11 +57,11 @@ class Router
     /**
      * @var array
      */
-    protected $_matchers = array(
+    protected $_matchers = [
         'post'     => '_matchPost',
         'page'     => '_matchPage',
         'category' => '_matchCategory',
-    );
+    ];
 
     /**
      * @param \Magento\Framework\App\ActionFactory     $actionFactory
@@ -113,7 +113,6 @@ class Router
                 }
 
                 return $this->actionFactory->create(\Magento\Framework\App\Action\Forward::class);
-
             }
         }
 
@@ -127,9 +126,11 @@ class Router
      */
     protected function _matchPost($identifier)
     {
-        $posts = $this->postApi->getCollection([
-            'slug' => $identifier
-        ]);
+        $posts = $this->postApi->getCollection(
+            [
+                'slug' => $identifier,
+            ]
+        );
 
         if (!$posts || !$posts->getSize()) {
             return false;
@@ -145,9 +146,11 @@ class Router
      */
     protected function _matchPage($identifier)
     {
-        $pages = $this->pageApi->getCollection([
-            'slug' => $identifier
-        ]);
+        $pages = $this->pageApi->getCollection(
+            [
+                'slug' => $identifier,
+            ]
+        );
 
         if (!$pages || !$pages->getSize()) {
             return false;
@@ -163,9 +166,11 @@ class Router
      */
     protected function _matchCategory($identifier)
     {
-        $categories = $this->categoryApi->getCollection([
-            'slug' => $identifier
-        ]);
+        $categories = $this->categoryApi->getCollection(
+            [
+                'slug' => $identifier,
+            ]
+        );
 
         if (!$categories || !$categories->getSize()) {
             return false;
