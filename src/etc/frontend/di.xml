@@ -11,4 +11,8 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Skywire\WordpressApi\Controller\Router">
+        <plugin name="skywire_wordpress_api_router_index_check" type="Skywire\WordpressApi\Plugin\Controller\Router\IndexCheck" />
+    </type>
 </config>
