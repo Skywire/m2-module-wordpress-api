@@ -21,6 +21,11 @@ class Post
     extends AbstractAction
 {
     /**
+     * @var \Skywire\WordpressApi\Model\Api\Media
+     */
+    protected $mediaApi;
+
+    /**
      * @var RequestHelper
      */
     private $requestHelper;
@@ -40,12 +45,14 @@ class Post
         PageFactory $resultPageFactory,
         RequestHelper $requestHelper,
         Registry $registry,
-        \Skywire\WordpressApi\Model\Api\Post $postApi
+        \Skywire\WordpressApi\Model\Api\Post $postApi,
+        \Skywire\WordpressApi\Model\Api\Media $mediaApi
     ) {
         parent::__construct($context, $resultPageFactory);
         $this->requestHelper = $requestHelper;
         $this->postApi       = $postApi;
         $this->registry      = $registry;
+        $this->mediaApi = $mediaApi;
     }
 
     public function execute()
@@ -58,8 +65,19 @@ class Post
 
             $resultPage = $this->_resultPageFactory->create();
             $resultPage->getConfig()->getTitle()->set($post->getTitle()->getRendered());
+            $resultPage->getConfig()->setDescription(strip_tags(substr($post->getContent()->getRendered(), 0, 400)));
+            $resultPage->getConfig()->setMetadata('og:image', $this->getFeaturedImage($post));
 
             return $resultPage;
         }
+    }
+
+    protected function getFeaturedImage($post)
+    {
+        if ($post->getFeaturedMedia()) {
+            $media = $this->mediaApi->getEntity($post->getFeaturedMedia());
+            return $media->getSourceUrl();
+        }
+        return '';
     }
 }
