@@ -11,7 +11,9 @@ use Skywire\WordpressApi\Test\Integration\Model\Api\AbstractApiTest;
 class RouterTest extends AbstractApiTest
 {
     /**
-     * @dataProvider dataProvider
+     * @dataProvider                       dataProvider
+     * @magentoConfigFixture               default/skywire_wordpress_api/api/path /
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
      */
     public function testMatch($slug, $shouldMatch)
     {

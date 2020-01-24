@@ -15,7 +15,9 @@ use Skywire\WordpressApi\Test\Integration\Controller\AbstractControllerTest;
 class PageTest extends AbstractControllerTest
 {
     /**
-     * @magentoDataFixture populateIndex
+     * @magentoDataFixture                 populateIndex
+     * @magentoConfigFixture               default/skywire_wordpress_api/api/path /
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
      */
     public function testExecute()
     {
@@ -25,5 +27,4 @@ class PageTest extends AbstractControllerTest
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertContains('sample-page', $response->getBody());
     }
-
 }

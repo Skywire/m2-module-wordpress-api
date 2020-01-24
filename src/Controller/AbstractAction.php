@@ -8,6 +8,7 @@ namespace Skywire\WordpressApi\Controller;
 
 
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\View\Result\PageFactory;
 
 /**

@@ -7,6 +7,11 @@ $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
 $paths = [
     [
+        'type' => 'category',
+        'slug' => 'aut-architecto-nihil',
+        'path' => 'category/aut-architecto-nihil',
+    ],
+    [
         'type' => 'page',
         'slug' => 'sample-page',
         'path' => 'page/sample-page',

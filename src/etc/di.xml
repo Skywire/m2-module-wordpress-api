@@ -13,4 +13,8 @@
     
     <preference for="Skywire\WordpressApi\Api\Data\Index\PathInterface" type="Skywire\WordpressApi\Model\Index\Path" />
     <preference for="Skywire\WordpressApi\Api\Index\PathRepositoryInterface" type="Skywire\WordpressApi\Model\Index\PathRepository" />
+
+    <type name="\Skywire\WordpressApi\Controller\AbstractAction">
+        <plugin name="skywire_wordpressapi_canonical" type="\Skywire\WordpressApi\Plugin\Controller\ApplyCanonical" />
+    </type>
 </config>

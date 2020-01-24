@@ -13,6 +13,7 @@ use Magento\Framework\DataObject;
 use Magento\Store\Model\ScopeInterface;
 use Skywire\WordpressApi\Model\Data\Collection;
 use Skywire\WordpressApi\Model\Data\CollectionFactory;
+
 use function GuzzleHttp\Psr7\parse_response;
 use function GuzzleHttp\Psr7\str;
 
@@ -142,7 +143,7 @@ abstract class ApiAbstract
      */
     protected function _parseRoute($id = '')
     {
-        $apiPath = $this->scopeConfig->getValue('skywire_wordpress_api/api/path');
+        $apiPath = trim($this->scopeConfig->getValue('skywire_wordpress_api/api/path'), '/');
         $route   = str_replace(':id', $id, $this->_getRoute());
         $route   = trim($route, '/');
 

@@ -12,18 +12,21 @@ use Skywire\WordpressApi\Test\Integration\Controller\AbstractControllerTest;
  * @package     Skywire\WordpressApi\Controller\Index
  * @author      Skywire Tech Team <tech@skywire.co.uk>
  */
-class CategoryTest extends AbstractControllerTest
+class CanonicalTest extends AbstractControllerTest
 {
     /**
      * @magentoDataFixture                 populateIndex
      * @magentoConfigFixture               default/skywire_wordpress_api/api/path /
      * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
      */
-    public function testExecute()
+    public function testCanonical()
     {
         $this->dispatch('blog/aut-architecto-nihil');
         $response = $this->getResponse();
         $this->assertEquals(200, $response->getHttpResponseCode());
-        $this->assertContains('aut-architecto-nihil', $response->getBody());
+        $this->assertRegExp(
+            '/<link\s*rel="canonical"\s*href=".*aut-architecto-nihil"/',
+            $response->getBody()
+        );
     }
 }
