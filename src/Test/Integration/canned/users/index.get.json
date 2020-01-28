@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "name": "Human Made",
+    "url": "",
+    "description": "",
+    "link": "https://demo.wp-api.org/author/humanmade/",
+    "slug": "humanmade",
+    "avatar_urls": {
+      "24": "https://secure.gravatar.com/avatar/c6cc8bc6e4048c8498f629b903cf4cc0?s=24&d=mm&r=g",
+      "48": "https://secure.gravatar.com/avatar/c6cc8bc6e4048c8498f629b903cf4cc0?s=48&d=mm&r=g",
+      "96": "https://secure.gravatar.com/avatar/c6cc8bc6e4048c8498f629b903cf4cc0?s=96&d=mm&r=g"
+    },
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://demo.wp-api.org/wp-json/wp/v2/users/1"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://demo.wp-api.org/wp-json/wp/v2/users"
+        }
+      ]
+    }
+  },
+  {
+    "id": 103,
+    "name": "Ryan McCue",
+    "url": "",
+    "description": "",
+    "link": "https://demo.wp-api.org/author/ryanhmn-md/",
+    "slug": "ryanhmn-md",
+    "avatar_urls": {
+      "24": "https://secure.gravatar.com/avatar/1506c9d589fe54ee96e91953672655af?s=24&d=mm&r=g",
+      "48": "https://secure.gravatar.com/avatar/1506c9d589fe54ee96e91953672655af?s=48&d=mm&r=g",
+      "96": "https://secure.gravatar.com/avatar/1506c9d589fe54ee96e91953672655af?s=96&d=mm&r=g"
+    },
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://demo.wp-api.org/wp-json/wp/v2/users/103"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://demo.wp-api.org/wp-json/wp/v2/users"
+        }
+      ]
+    }
+  }
+]
