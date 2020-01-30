@@ -65,6 +65,15 @@ abstract class ApiAbstract
     {
         $response = $this->_request($this->_parseRoute(), $params);
 
+        if ($contentLength = $response->getHeader('Content-Length')) {
+            if (is_array($contentLength)) {
+                $contentLength = $contentLength[0];
+            }
+            if ($contentLength == 0) {
+                return $this->_createCollection();
+            }
+        }
+
         $collection = $this->_createCollection(\Zend_Json::decode($response->getBody()));
 
         if ($totalPages = $response->getHeader('X-WP-TotalPages')) {
