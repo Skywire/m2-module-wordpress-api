@@ -17,7 +17,7 @@ addons:
 services:
   - docker
 #  - rabbitmq
-#  - elasticsearch
+  - elasticsearch
 language: php
 php:
   - 7.2
@@ -67,7 +67,7 @@ install:
   - git submodule init
   - cd .docker-install
   - sudo pip install -r requirements.txt
-  - python install.py --install-path ../ --domain travisgento.com --mage 2 --php 72 --redis --rabbitmq --elasticsearch --ioncube
+  - python install.py --install-path ../ --domain travisgento.com --no-http2 --mage 2 --php 72 --redis --rabbitmq --ioncube --varnish=0 --no-mutagen
   - cd ../
   # Install canned
   - npm install -g canned
