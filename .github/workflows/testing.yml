@@ -1,0 +1,21 @@
+name: Magento 2 Tests
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with: git@github.com:alexcheng1982/docker-magento2.git
+        ref: 2.3.3
+        env:
+          - phpVersion: 7.3
+
+      - name: Build M2 docker image
+        id: docker-compoe
+        run: docker-compose up -d
