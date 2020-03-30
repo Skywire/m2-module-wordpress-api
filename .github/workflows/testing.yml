@@ -11,12 +11,82 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          repository: git@github.com:alexcheng1982/docker-magento2.git
-          ref: 2.3.3
-        env:
-          - phpVersion: 7.3
 
-      - name: Build M2 docker image
-        id: docker-compoe
-        run: docker-compose up -d
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.3'
+          extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip, lib-libxml
+          coverage: xdebug
+
+      - name: Configure composer
+        run: |
+          echo "{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${{ secrets.MAGENTO_USERNAME }}\",\"password\":\"${{ secrets.MAGENTO_PASSWORD }}\"}}}" > auth.json
+          composer config -g github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+          composer config --global --auth http-basic.repo.packagist.com tech@skywire.co.uk ${{ secrets.PACKAGIST_KEY }}
+          composer config repositories.repo.packagist.com composer https://repo.packagist.com/skywire/
+
+      - name: Test composer auth
+        run: git clone ${{ secrets.GITHUB_TOKEN }}@github.com:Skywire/m2-actions-workflow.git ./m2-actions-workflow
+
+      - name: Download magento
+        id: download-magento
+        run: |
+          composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.3.3 ./magento
+
+      - name: Add module under test
+        id: add-module
+        run: |
+          cp ./auth.json ./magento/auth.json
+          cd magento
+          composer require skywire/wordpressapi dev-${{ github.head_ref }} --prefer-source --no-update
+          composer require skywire/m2-actions-workflow ^1.0.0
+          cd ../
+
+      - name: Get skywire-docker
+        uses: actions/checkout@v2
+        with:
+          repository: Skywire/skywire-docker
+          path: ./skywire-docker
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.8.2
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.8.2'
+
+      - name: Add docker config
+        run: |
+          cd ./skywire-docker
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python install.py --install-path ${{github.workspace}}/magento --domain doceker.magento.com --http2 --mage 2 --php 73 --redis --rabbitmq --no-ioncube --varnish=0 --no-mutagen --dbpass 123123q --database magento_integration_tests
+          cd ../
+
+      - name: Start docker
+        run: |
+          cd magento
+          docker-compose up -d
+          cd ../
+
+      - name: Install Dependencies
+        run: |
+          cd magento
+          composer install --no-interaction
+          cd ../
+
+      - name: Unit Tests
+        run: |
+          cd magento
+          cp .github/workflows/config/unit/* dev/tests/unit/
+          cd dev/tests/unit
+          ../../../vendor/bin/phpunit -c phpunit.xml
+          cd ../
+
+      - name: Integration Tests
+        run: |
+          cd magento
+          cp -r .github/workflows/config/integration/* dev/tests/integration/
+          cd dev/tests/integration
+          ../../../vendor/bin/phpunit -c phpunit.xml
+          cd magento
