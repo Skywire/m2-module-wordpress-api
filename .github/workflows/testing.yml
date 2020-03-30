@@ -11,12 +11,111 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          repository: git@github.com:alexcheng1982/docker-magento2.git
-          ref: 2.3.3
-        env:
-          - phpVersion: 7.3
 
-      - name: Build M2 docker image
-        id: docker-compoe
-        run: docker-compose up -d
+      - uses: getong/rabbitmq-action@v1.2
+        with:
+          rabbitmq version: '3.8.2-management-alpine'
+          host port: 5672
+          rabbitmq user: 'guest'
+          rabbitmq password: 'guest'
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.3'
+          extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip, lib-libxml
+          coverage: xdebug
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Composer cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Configure composer
+        run: |
+          composer config -g github-protocols https # Only add this if you're testing a public repo. It  will ensure everythings cloned via HTTPS not SSH.
+          composer config -g http-basic.repo.magento.com ${{ secrets.MAGENTO_USERNAME}} ${{ secrets.MAGENTO_PASSWORD}}
+          composer config -g github-oauth.github.com ${{ secrets.ACCESS_TOKEN }}
+          composer config -g http-basic.repo.packagist.com tech@skywire.co.uk ${{ secrets.PACKAGIST_KEY }}
+          composer config -g repositories.repo.packagist.com composer https://repo.packagist.com/skywire/
+          composer config -g repositories.packagist.org false
+
+      - name: Download magento
+        id: download-magento
+        run: |
+          composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.3.3 ./magento
+
+      - name: Add module under test
+        id: add-module
+        run: |
+          cd magento
+          composer require `jq -r .name ../composer.json` dev-${{ github.head_ref }} --prefer-source --no-update
+          composer require skywire/m2-actions-workflow ^1.0.0 --prefer-source --no-update
+          cd ../
+
+      - name: Get skywire-docker
+        uses: actions/checkout@v2
+        with:
+          repository: Skywire/skywire-docker
+          path: ./skywire-docker
+          token: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Set up Python 3.8.2
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.8.2'
+
+      - name: Add docker config
+        run: |
+          cd ./skywire-docker
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python install.py --install-path ${{github.workspace}}/magento --domain doceker.magento.com --http2 --mage 2 --php 73 --redis --rabbitmq --no-ioncube --varnish=0 --no-mutagen --dbpass 123123q --database magento_integration_tests
+          cd ../
+
+      - name: Start docker
+        run: |
+          cd magento
+          chmod -R 777 skywire-docker/data
+          docker-compose up -d
+          cd ../
+
+      - name: Install Dependencies
+        run: |
+          cd magento
+          composer install --no-interaction
+          cd ../
+
+      - name: Unit Tests
+        run: |
+          cd magento
+          cp .github/workflows/config/unit/* dev/tests/unit/
+          cd dev/tests/unit
+          ../../../vendor/bin/phpunit -c phpunit.xml
+          cd ../
+
+      - name: Install canned server
+        run: sudo npm -g install canned
+
+      - name: Integration Tests
+        run: |
+          cd magento
+          cp -r .github/workflows/config/integration/* dev/tests/integration/
+          nohup canned vendor/skywire/wordpressapi/src/Test/Integration/canned > /dev/null 2>&1 &
+          cd dev/tests/integration
+          ../../../vendor/bin/phpunit -c phpunit.xml
+          cd ../
+
+      - name: Cleanup docker
+        run: |
+          cd magento
+          docker-compose stop
+          sudo rm -rf skywire-docker
+          cd ../
