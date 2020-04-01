@@ -6,7 +6,7 @@
             <label>Skywire Wordpress API</label>
             <tab>service</tab>
             <resource>Skywire_WordpressApi::resource</resource>
-            <group id="api" translate="label" type="text" sortOrder="10" showInDefault="1">
+            <group id="api" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>API Configuration</label>
                 <field id="base_url" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>WP Base URL</label>
@@ -38,7 +38,7 @@
                     <comment>Cache TTL in seconds</comment>
                 </field>
             </group>
-            <group id="pagination" translate="label" type="text" sortOrder="20" showInDefault="1">
+            <group id="pagination" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Category Pagination</label>
                 <field id="posts_per_page" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Posts Per Page</label>
@@ -46,7 +46,7 @@
                 </field>
             </group>
 
-            <group id="indexing" translate="label" type="text" sortOrder="20" showInDefault="1">
+            <group id="indexing" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Path Indexing</label>
                 <field id="cron_schedule" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Cron Schedule</label>
