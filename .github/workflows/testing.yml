@@ -9,6 +9,9 @@ on:
 jobs:
   run_tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ['7.2', '7.3']
     steps:
       - uses: actions/checkout@v2
 
@@ -22,8 +25,8 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.3'
-          extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip, lib-libxml
+          php-version: ${{ matrix.php-version }}
+          extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip
           coverage: xdebug
 
       - name: Get Composer Cache Directory
@@ -42,7 +45,7 @@ jobs:
         run: |
           composer config -g github-protocols https # Only add this if you're testing a public repo. It  will ensure everythings cloned via HTTPS not SSH.
           composer config -g http-basic.repo.magento.com ${{ secrets.MAGENTO_USERNAME}} ${{ secrets.MAGENTO_PASSWORD}}
-          composer config -g github-oauth.github.com ${{ secrets.ACCESS_TOKEN }}
+          composer config -g github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
           composer config -g http-basic.repo.packagist.com tech@skywire.co.uk ${{ secrets.PACKAGIST_KEY }}
           composer config -g repositories.repo.packagist.com composer https://repo.packagist.com/skywire/
           composer config -g repositories.packagist.org false
@@ -50,7 +53,7 @@ jobs:
       - name: Download magento
         id: download-magento
         run: |
-          composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.3.3 ./magento
+          composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.3.4 ./magento
 
       - name: Add module under test
         id: add-module
@@ -60,32 +63,12 @@ jobs:
           composer require skywire/m2-actions-workflow ^1.0.0 --prefer-source --no-update
           cd ../
 
-      - name: Get skywire-docker
-        uses: actions/checkout@v2
+      - name: Install MySQL
+        uses: mirromutth/mysql-action@v1.1
         with:
-          repository: Skywire/skywire-docker
-          path: ./skywire-docker
-          token: ${{ secrets.ACCESS_TOKEN }}
-
-      - name: Set up Python 3.8.2
-        uses: actions/setup-python@v1
-        with:
-          python-version: '3.8.2'
-
-      - name: Add docker config
-        run: |
-          cd ./skywire-docker
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          python install.py --install-path ${{github.workspace}}/magento --domain doceker.magento.com --http2 --mage 2 --php 73 --redis --rabbitmq --no-ioncube --varnish=0 --no-mutagen --dbpass 123123q --database magento_integration_tests
-          cd ../
-
-      - name: Start docker
-        run: |
-          cd magento
-          chmod -R 777 skywire-docker/data
-          docker-compose up -d
-          cd ../
+          mysql version: '5.7'
+          mysql database: 'magento_integration_tests'
+          mysql root password: 123123q
 
       - name: Install Dependencies
         run: |
@@ -111,11 +94,4 @@ jobs:
           nohup canned vendor/skywire/wordpressapi/src/Test/Integration/canned > /dev/null 2>&1 &
           cd dev/tests/integration
           ../../../vendor/bin/phpunit -c phpunit.xml
-          cd ../
-
-      - name: Cleanup docker
-        run: |
-          cd magento
-          docker-compose stop
-          sudo rm -rf skywire-docker
           cd ../
