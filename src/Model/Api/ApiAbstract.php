@@ -143,7 +143,7 @@ abstract class ApiAbstract
      */
     protected function _parseRoute($id = '')
     {
-        $apiPath = trim($this->scopeConfig->getValue('skywire_wordpress_api/api/path'), '/');
+        $apiPath = trim($this->scopeConfig->getValue('skywire_wordpress_api/api/path', ScopeInterface::SCOPE_STORE), '/');
         $route   = str_replace(':id', $id, $this->_getRoute());
         $route   = trim($route, '/');
 

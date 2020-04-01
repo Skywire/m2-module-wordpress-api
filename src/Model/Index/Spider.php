@@ -3,6 +3,7 @@
 namespace Skywire\WordpressApi\Model\Index;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 use Skywire\WordpressApi\Model\Api\Type;
 
 class Spider
@@ -53,7 +54,7 @@ class Spider
             $nextPage = true;
             $page = 1;
             while ($nextPage) {
-                $apiPath = $this->scopeConfig->getValue('skywire_wordpress_api/api/path');
+                $apiPath = $this->scopeConfig->getValue('skywire_wordpress_api/api/path', ScopeInterface::SCOPE_STORE);
                 $response = $client->get($apiPath . '/' . $type . '?per_page=100&page=' . $page);
 
                 $body = (string)$response->getBody();
