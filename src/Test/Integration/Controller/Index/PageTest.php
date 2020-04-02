@@ -16,7 +16,7 @@ class PageTest extends AbstractControllerTest
 {
     /**
      * @magentoDataFixture                 populateIndex
-     * @magentoConfigFixture               default/skywire_wordpress_api/api/path /
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/path /
      * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
      */
     public function testExecute()
