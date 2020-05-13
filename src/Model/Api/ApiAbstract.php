@@ -11,6 +11,7 @@ namespace Skywire\WordpressApi\Model\Api;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\DataObject;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Skywire\WordpressApi\Model\Data\Collection;
 use Skywire\WordpressApi\Model\Data\CollectionFactory;
 
@@ -25,6 +26,11 @@ abstract class ApiAbstract
 {
     /** @var  \GuzzleHttp\Client */
     protected $restClient;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
 
     /**
      * @var ScopeConfigInterface
@@ -45,11 +51,13 @@ abstract class ApiAbstract
         ScopeConfigInterface $scopeConfig,
         CollectionFactory $collectionFactory,
         Cache $cache,
+        StoreManagerInterface $storeManager,
         $restClient = null
     ) {
         $this->scopeConfig       = $scopeConfig;
         $this->collectionFactory = $collectionFactory;
         $this->cache             = $cache;
+        $this->storeManager      = $storeManager;
 
         if ($restClient) {
             $this->restClient = $restClient;
@@ -159,7 +167,7 @@ abstract class ApiAbstract
      */
     protected function _request($route, $params = [])
     {
-        $cacheKey = $this->_getCacheKey($route, $params);
+        $cacheKey = $this->_getCacheKey($route, $params, $this->storeManager->getStore()->getCode());
         $cached   = $this->cache->load($cacheKey);
         if ($cached) {
             return parse_response($cached);
@@ -178,12 +186,20 @@ abstract class ApiAbstract
         return $response;
     }
 
-    protected function _getCacheKey($route, $params)
+    protected function _getCacheKey($route, $params, $storeCode)
     {
         $key = $route;
         $key .= md5(serialize($params));
+        $key .= $storeCode;
 
         return $key;
+    }
+
+    public function resetRestClient() {
+        if ($this->restClient) {
+            $this->restClient = null;
+        }
+        return $this;
     }
 
     /**
@@ -197,11 +213,11 @@ abstract class ApiAbstract
                 'base_uri' => $this->getBaseUri(),
                 'timeout'  => 10,
                 'defaults' => [
-                    'headers' => ['Content-Type' => 'application/json'],
-                    'auth'    => [
-                        $this->scopeConfig->getValue('skywire_wordpress_api/api/username', ScopeInterface::SCOPE_STORE),
-                        $this->scopeConfig->getValue('skywire_wordpress_api/api/password', ScopeInterface::SCOPE_STORE)
-                    ],
+                    'headers' => ['Content-Type' => 'application/json']
+                ],
+                'auth'    => [
+                    $this->scopeConfig->getValue('skywire_wordpress_api/api/username', ScopeInterface::SCOPE_STORE),
+                    $this->scopeConfig->getValue('skywire_wordpress_api/api/password', ScopeInterface::SCOPE_STORE)
                 ]
             ]);
 

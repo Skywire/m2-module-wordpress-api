@@ -2,6 +2,7 @@
 
 namespace Skywire\WordpressApi\Plugin\Controller\Router;
 
+use Magento\Store\Model\StoreManagerInterface;
 use Skywire\WordpressApi\Api\Index\PathRepositoryInterface;
 use Skywire\WordpressApi\Helper\RequestHelper;
 
@@ -17,10 +18,20 @@ class IndexCheck
      */
     protected $repository;
 
-    public function __construct(RequestHelper $requestHelper, PathRepositoryInterface $repository)
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+
+    public function __construct(
+        RequestHelper $requestHelper,
+        PathRepositoryInterface $repository,
+        StoreManagerInterface $storeManager
+    )
     {
         $this->requestHelper = $requestHelper;
         $this->repository    = $repository;
+        $this->storeManager  = $storeManager;
     }
 
     public function aroundMatch(
@@ -29,8 +40,9 @@ class IndexCheck
         \Magento\Framework\App\RequestInterface $request
     ) {
         $slug = $this->requestHelper->getSlug($request);
+        $storeCode = $this->storeManager->getStore()->getCode();
 
-        if (!$this->repository->slugExists($slug)) {
+        if (!$this->repository->slugExists($slug, $storeCode)) {
             return false;
         }
 

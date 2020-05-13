@@ -2,6 +2,7 @@
     "skywire_wordpressapi_path": {
         "column": {
             "entity_id": true,
+            "store_code": true,
             "type": true,
             "path": true,
             "slug": true,
