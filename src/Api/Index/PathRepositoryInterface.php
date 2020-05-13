@@ -13,14 +13,15 @@ interface PathRepositoryInterface
     /**
      * @param string $path
      *
+     * @param string $storeCode
+     *
      * @return PathInterface
-     * @throws NoSuchEntityException
      */
-    public function getByPath(string $path): PathInterface;
+    public function getByPath(string $path, string $storeCode = 'default'): PathInterface;
 
-    public function slugExists(string $slug, string $type = null): bool;
+    public function slugExists(string $slug, string $storeCode = 'default', string $type = null): bool;
 
-    public function pathExists(string $path): bool;
+    public function pathExists(string $path, string $storeCode = 'default'): bool;
 
     /**
      * Create or update the path.

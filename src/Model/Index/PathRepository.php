@@ -32,23 +32,24 @@ class PathRepository implements PathRepositoryInterface
         $this->collectionFactory = $collectionFactory;
     }
 
-    public function getByPath(string $path): PathInterface
+    public function getByPath(string $path, string $storeCode = 'default'): PathInterface
     {
-        $model = $this->pathFactory->create();
+        $collection = $this->collectionFactory->create()
+            ->addFieldToFilter('path', $path)
+            ->addFieldToFilter('store_code', $storeCode);
 
-        $this->resource->load($model, $path, 'path');
-
-        if ($model->getId()) {
-            return $model;
+        if ($collection->getFirstItem()->getId()) {
+            return $collection->getFirstItem();
         }
 
         throw new NoSuchEntityException();
     }
 
-    public function slugExists(string $slug, string $type = null): bool
+    public function slugExists(string $slug, string $storeCode = 'default', string $type = null): bool
     {
         $collection = $this->collectionFactory->create()
-            ->addFieldToFilter('slug', $slug);
+            ->addFieldToFilter('slug', $slug)
+            ->addFieldToFilter('store_code', $storeCode);
 
 
         if ($type) {
@@ -58,10 +59,10 @@ class PathRepository implements PathRepositoryInterface
         return $collection->count() >= 1;
     }
 
-    public function pathExists(string $path): bool
+    public function pathExists(string $path, string $storeCode = 'default'): bool
     {
         try {
-            $this->getByPath($path);
+            $this->getByPath($path, $storeCode);
         } catch (NoSuchEntityException $e) {
             return false;
         }
@@ -72,9 +73,12 @@ class PathRepository implements PathRepositoryInterface
     public function create(PathInterface $path): PathInterface
     {
         $collection = $this->collectionFactory->create();
+        $row = $collection
+            ->addFieldToFilter('path', $path->getPath())
+            ->addFieldToFilter('store_code', $path->getStoreCode());
 
-        if ($collection->getItemByColumnValue('path', $path->getPath())) {
-            $model = $this->getByPath($path->getPath());
+        if ($row->count() > 0) {
+            $model = $this->getByPath($path->getPath(), $path->getStoreCode());
             $path->setId($model->getId());
         }
 

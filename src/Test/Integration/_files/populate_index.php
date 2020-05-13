@@ -7,19 +7,22 @@ $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
 $paths = [
     [
-        'type' => 'category',
-        'slug' => 'aut-architecto-nihil',
-        'path' => 'category/aut-architecto-nihil',
+        'store_code' => 'default',
+        'type'       => 'category',
+        'slug'       => 'aut-architecto-nihil',
+        'path'       => 'category/aut-architecto-nihil',
     ],
     [
-        'type' => 'page',
-        'slug' => 'sample-page',
-        'path' => 'page/sample-page',
+        'store_code' => 'default',
+        'type'       => 'page',
+        'slug'       => 'sample-page',
+        'path'       => 'page/sample-page',
     ],
     [
-        'type' => 'post',
-        'slug' => 'hello-world',
-        'path' => 'post/hello-world',
+        'store_code' => 'default',
+        'type'       => 'post',
+        'slug'       => 'hello-world',
+        'path'       => 'post/hello-world',
     ],
 ];
 
