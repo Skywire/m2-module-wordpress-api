@@ -39,21 +39,6 @@ The number of sibling posts can be modified via the layout.
 
 https://www.advancedcustomfields.com/ is nearly always installed on the WordPress instance but the fields added do not automatically appear in the WP API.
 
-To add them to the API data customise and add the following code to your active theme's `functions.php`
+To add them to the API data install https://wordpress.org/plugins/acf-to-rest-api/
 
-```
-/**
- * Add specific Advanced Custom Fields
- * Fields added to meta key of post data
- */
-add_filter('rest_prepare_post', 'wp_api_encode_post_acf', 10, 3);
-function wp_api_encode_post_acf($data,$post,$context){
-
-    $data->data['meta']['footer_call_to_action_text'] =  get_field('footer_call_to_action_text', $post->ID);
-    $data->data['meta']['footer_call_to_action_link'] =  get_field('footer_call_to_action_link', $post->ID);    
-
-    return $data;
-}
-```
-
-This data can then be used in your post templates .phtml file via `$post->getMeta('footer_call_to_action_link')`
+This data can then be used in your post templates .phtml file via `$post->getAcf('footer_call_to_action_link')`
