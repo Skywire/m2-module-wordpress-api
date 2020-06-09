@@ -1,0 +1,39 @@
+{
+    "id": 3,
+    "count": 6,
+    "description": "Nostrum assumenda quisquam odio illo iure voluptatibus architecto vel vel enim qui soluta dolor natus impedit nobis atque et dolore a quo in rem",
+    "link": "https://demo.wp-api.org/tag/voluptates/",
+    "name": "Voluptates",
+    "slug": "voluptates",
+    "taxonomy": "post_tag",
+    "meta": [],
+    "_links": {
+        "self": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/tags/3"
+            }
+        ],
+        "collection": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/tags"
+            }
+        ],
+        "about": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/taxonomies/post_tag"
+            }
+        ],
+        "wp:post_type": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/posts?tags=3"
+            }
+        ],
+        "curies": [
+            {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }
+        ]
+    }
+}

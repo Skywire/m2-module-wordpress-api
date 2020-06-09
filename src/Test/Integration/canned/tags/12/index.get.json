@@ -1,0 +1,39 @@
+{
+    "id": 12,
+    "count": 0,
+    "description": "Test",
+    "link": "https://demo.wp-api.org/tag/test/",
+    "name": "test",
+    "slug": "test",
+    "taxonomy": "post_tag",
+    "meta": [],
+    "_links": {
+        "self": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/tags/12"
+            }
+        ],
+        "collection": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/tags"
+            }
+        ],
+        "about": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/taxonomies/post_tag"
+            }
+        ],
+        "wp:post_type": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/posts?tags=12"
+            }
+        ],
+        "curies": [
+            {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }
+        ]
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "id": 4,
+    "count": 4,
+    "description": "Nobis quia corrupti et atque corrupti vero autem reprehenderit dicta dolor aut sed quas omnis et ut dolores libero",
+    "link": "https://demo.wp-api.org/tag/voluptatem-iure-accusantium-deserunt-rerum-assumenda-ut-quia-et/",
+    "name": "Voluptatem iure accusantium deserunt rerum assumenda ut quia et",
+    "slug": "voluptatem-iure-accusantium-deserunt-rerum-assumenda-ut-quia-et",
+    "taxonomy": "post_tag",
+    "meta": [],
+    "_links": {
+        "self": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/tags/4"
+            }
+        ],
+        "collection": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/tags"
+            }
+        ],
+        "about": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/taxonomies/post_tag"
+            }
+        ],
+        "wp:post_type": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/posts?tags=4"
+            }
+        ],
+        "curies": [
+            {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }
+        ]
+    }
+}

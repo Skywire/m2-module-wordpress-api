@@ -1,0 +1,39 @@
+{
+    "id": 6,
+    "count": 3,
+    "description": "Omnis inventore occaecati sed incidunt eaque laborum laboriosam ipsa quam reiciendis sint porro ut quis vero sapiente eius quia ea corrupti dolorem perferendis consectetur",
+    "link": "https://demo.wp-api.org/tag/eum-non-dolorem-ducimus-libero/",
+    "name": "Eum non dolorem ducimus libero",
+    "slug": "eum-non-dolorem-ducimus-libero",
+    "taxonomy": "post_tag",
+    "meta": [],
+    "_links": {
+        "self": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/tags/6"
+            }
+        ],
+        "collection": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/tags"
+            }
+        ],
+        "about": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/taxonomies/post_tag"
+            }
+        ],
+        "wp:post_type": [
+            {
+                "href": "https://demo.wp-api.org/wp-json/wp/v2/posts?tags=6"
+            }
+        ],
+        "curies": [
+            {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }
+        ]
+    }
+}
