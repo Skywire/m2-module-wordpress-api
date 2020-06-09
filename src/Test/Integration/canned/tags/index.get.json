@@ -1,0 +1,159 @@
+//! customHeader: {"X-WP-TotalPages": "1"}
+[
+    {
+        "id": 6,
+        "count": 3,
+        "description": "Omnis inventore occaecati sed incidunt eaque laborum laboriosam ipsa quam reiciendis sint porro ut quis vero sapiente eius quia ea corrupti dolorem perferendis consectetur",
+        "link": "https://demo.wp-api.org/tag/eum-non-dolorem-ducimus-libero/",
+        "name": "Eum non dolorem ducimus libero",
+        "slug": "eum-non-dolorem-ducimus-libero",
+        "taxonomy": "post_tag",
+        "meta": [],
+        "_links": {
+            "self": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/tags/6"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/tags"
+                }
+            ],
+            "about": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/taxonomies/post_tag"
+                }
+            ],
+            "wp:post_type": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/posts?tags=6"
+                }
+            ],
+            "curies": [
+                {
+                    "name": "wp",
+                    "href": "https://api.w.org/{rel}",
+                    "templated": true
+                }
+            ]
+        }
+    },
+    {
+        "id": 12,
+        "count": 0,
+        "description": "Test",
+        "link": "https://demo.wp-api.org/tag/test/",
+        "name": "test",
+        "slug": "test",
+        "taxonomy": "post_tag",
+        "meta": [],
+        "_links": {
+            "self": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/tags/12"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/tags"
+                }
+            ],
+            "about": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/taxonomies/post_tag"
+                }
+            ],
+            "wp:post_type": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/posts?tags=12"
+                }
+            ],
+            "curies": [
+                {
+                    "name": "wp",
+                    "href": "https://api.w.org/{rel}",
+                    "templated": true
+                }
+            ]
+        }
+    },
+    {
+        "id": 4,
+        "count": 4,
+        "description": "Nobis quia corrupti et atque corrupti vero autem reprehenderit dicta dolor aut sed quas omnis et ut dolores libero",
+        "link": "https://demo.wp-api.org/tag/voluptatem-iure-accusantium-deserunt-rerum-assumenda-ut-quia-et/",
+        "name": "Voluptatem iure accusantium deserunt rerum assumenda ut quia et",
+        "slug": "voluptatem-iure-accusantium-deserunt-rerum-assumenda-ut-quia-et",
+        "taxonomy": "post_tag",
+        "meta": [],
+        "_links": {
+            "self": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/tags/4"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/tags"
+                }
+            ],
+            "about": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/taxonomies/post_tag"
+                }
+            ],
+            "wp:post_type": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/posts?tags=4"
+                }
+            ],
+            "curies": [
+                {
+                    "name": "wp",
+                    "href": "https://api.w.org/{rel}",
+                    "templated": true
+                }
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "count": 6,
+        "description": "Nostrum assumenda quisquam odio illo iure voluptatibus architecto vel vel enim qui soluta dolor natus impedit nobis atque et dolore a quo in rem",
+        "link": "https://demo.wp-api.org/tag/voluptates/",
+        "name": "Voluptates",
+        "slug": "voluptates",
+        "taxonomy": "post_tag",
+        "meta": [],
+        "_links": {
+            "self": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/tags/3"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/tags"
+                }
+            ],
+            "about": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/taxonomies/post_tag"
+                }
+            ],
+            "wp:post_type": [
+                {
+                    "href": "https://demo.wp-api.org/wp-json/wp/v2/posts?tags=3"
+                }
+            ],
+            "curies": [
+                {
+                    "name": "wp",
+                    "href": "https://api.w.org/{rel}",
+                    "templated": true
+                }
+            ]
+        }
+    }
+]

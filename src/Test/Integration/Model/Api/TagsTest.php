@@ -19,15 +19,15 @@ class TagsTest extends AbstractApiTest
         $tags  = $this->objectManager->get(Tags::class);
         $result = $tags->getCollection();
 
-        $this->assertCount(10, $result);
-        $this->assertEquals(36, $result->getFirstItem()->getId());
+        $this->assertCount(4, $result);
+        $this->assertEquals(6, $result->getFirstItem()->getId());
     }
 
     public function testGetEntity()
     {
         $tags  = $this->objectManager->get(Tags::class);
-        $result = $tags->getEntity(36);
+        $result = $tags->getEntity(12);
 
-        $this->assertEquals(36, $result->getId());
+        $this->assertEquals(12, $result->getId());
     }
 }
