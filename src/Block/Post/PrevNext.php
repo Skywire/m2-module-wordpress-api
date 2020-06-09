@@ -11,6 +11,7 @@ use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 use Skywire\WordpressApi\Block\Post;
 use Skywire\WordpressApi\Model\Api\Media;
+use Skywire\WordpressApi\Model\Api\Tags;
 use Skywire\WordpressApi\Model\Api\Post as PostApi;
 
 /**
@@ -28,10 +29,11 @@ class PrevNext extends Post
         Template\Context $context,
         Registry $registry,
         Media $mediaApi,
+        Tags $tagsApi,
         PostApi $postApi,
         array $data = []
     ) {
-        parent::__construct($context, $registry, $mediaApi, $data);
+        parent::__construct($context, $registry, $mediaApi, $tagsApi, $data);
         $this->postApi = $postApi;
     }
 

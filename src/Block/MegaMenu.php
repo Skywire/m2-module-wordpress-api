@@ -14,6 +14,7 @@ use Skywire\WordpressApi\Helper\RequestHelper;
 use Skywire\WordpressApi\Model\Api\ApiException;
 use Skywire\WordpressApi\Model\Api\Category as CategoryApi;
 use Skywire\WordpressApi\Model\Api\Media;
+use Skywire\WordpressApi\Model\Api\Tags;
 use Skywire\WordpressApi\Model\Api\Post as PostApi;
 
 /**
@@ -45,12 +46,13 @@ class MegaMenu extends Post
         Template\Context $context,
         Registry $registry,
         Media $mediaApi,
+        Tags $tagsApi,
         PostApi $postApi,
         CategoryApi $categoryApi,
         RequestHelper $requestHelper,
         array $data = []
     ) {
-        parent::__construct($context, $registry, $mediaApi, $data);
+        parent::__construct($context, $registry, $mediaApi, $tagsApi, $data);
         $this->postApi       = $postApi;
         $this->categoryApi   = $categoryApi;
         $this->requestHelper = $requestHelper;

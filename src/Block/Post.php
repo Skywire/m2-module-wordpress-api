@@ -11,6 +11,7 @@ use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
 use Skywire\WordpressApi\Model\Api\Media;
+use Skywire\WordpressApi\Model\Api\Tags;
 
 /**
  * @package     Skywire\WordpressApi\Block
@@ -29,15 +30,22 @@ class Post
      */
     private $mediaApi;
 
+    /**
+     * @var Tags
+     */
+    private $tagsApi;
+
     public function __construct(
         Template\Context $context,
         Registry $registry,
         Media $mediaApi,
+        Tags $tagsApi,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->registry = $registry;
         $this->mediaApi = $mediaApi;
+        $this->tagsApi = $tagsApi;
     }
 
     /**
@@ -118,5 +126,19 @@ class Post
         }
 
         return $this->getData('featured_image');
+    }
+
+    public function getTags()
+    {
+        $post = $this->getPost();
+        $tags = array();
+
+        if($tagIds = $post->getTags()->getData()) {
+            foreach ($tagIds as $tagId) {
+                $tags[] = $this->tagsApi->getEntity($tagId)->getName();
+            }
+        }
+
+        return $tags;
     }
 }
