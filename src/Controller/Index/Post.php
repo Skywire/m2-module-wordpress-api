@@ -26,6 +26,11 @@ class Post
     protected $mediaApi;
 
     /**
+     * @var \Skywire\WordpressApi\Model\Api\Tags
+     */
+    protected $tagsApi;
+
+    /**
      * @var RequestHelper
      */
     private $requestHelper;
@@ -46,13 +51,15 @@ class Post
         RequestHelper $requestHelper,
         Registry $registry,
         \Skywire\WordpressApi\Model\Api\Post $postApi,
-        \Skywire\WordpressApi\Model\Api\Media $mediaApi
+        \Skywire\WordpressApi\Model\Api\Media $mediaApi,
+        \Skywire\WordpressApi\Model\Api\Tags $tagsApi
     ) {
         parent::__construct($context, $resultPageFactory);
         $this->requestHelper = $requestHelper;
         $this->postApi       = $postApi;
         $this->registry      = $registry;
         $this->mediaApi = $mediaApi;
+        $this->tagsApi = $tagsApi;
     }
 
     public function execute()
@@ -79,5 +86,19 @@ class Post
             return $media->getSourceUrl();
         }
         return '';
+    }
+
+    public function getTags()
+    {
+        $post = $this->getPost();
+        $tags = array();
+
+        if($tagIds = $post->getTags()->getData()) {
+            foreach ($tagIds as $tagId) {
+                $tags[] = $this->tagsApi->getEntity($tagId)->getName();
+            }
+        }
+
+        return $tags;
     }
 }
