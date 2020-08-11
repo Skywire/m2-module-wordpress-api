@@ -52,9 +52,9 @@ class Category
      */
     protected function _prepareLayout()
     {
-        if (($title = $this->getCategory()->getName()) && $breadcrumbsBlock = $this->getLayout()->getBlock(
-                'breadcrumbs'
-            )) {
+        if($this->getCategory()) {
+            $title = $this->getCategory()->getName();
+            if ($breadcrumbsBlock = $this->getLayout()->getBlock('breadcrumbs')) {
                 $breadcrumbsBlock->addCrumb(
                     'home',
                     [
@@ -94,6 +94,7 @@ class Category
                     ]
                 );
             }
+        }
 
         return parent::_prepareLayout();
     }
