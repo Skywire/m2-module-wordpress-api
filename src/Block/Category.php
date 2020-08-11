@@ -52,35 +52,48 @@ class Category
      */
     protected function _prepareLayout()
     {
-        $title = $this->getCategory()->getName();
-        if ($breadcrumbsBlock = $this->getLayout()->getBlock('breadcrumbs')) {
-            $breadcrumbsBlock->addCrumb(
-                'home',
-                [
-                    'label' => __('Home'),
-                    'title' => __('Home'),
-                    'link'  => $this->_storeManager->getStore()->getBaseUrl()
-                ]
-            );
-            $breadcrumbsBlock->addCrumb(
-                'blog',
-                [
-                    'label' => __($this->_scopeConfig->getValue('skywire_wordpress_api/api/nav_name',
-                        ScopeInterface::SCOPE_STORE)),
-                    'title' => __($this->_scopeConfig->getValue('skywire_wordpress_api/api/nav_name',
-                        ScopeInterface::SCOPE_STORE)),
-                    'link'  => $this->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
-                        ScopeInterface::SCOPE_STORE))
-                ]
-            );
-            $breadcrumbsBlock->addCrumb(
-                'post',
-                [
-                    'label' => __($title),
-                    'title' => __($title)
-                ]
-            );
-        }
+        if (($title = $this->getCategory()->getName()) && $breadcrumbsBlock = $this->getLayout()->getBlock(
+                'breadcrumbs'
+            )) {
+                $breadcrumbsBlock->addCrumb(
+                    'home',
+                    [
+                        'label' => __('Home'),
+                        'title' => __('Home'),
+                        'link'  => $this->_storeManager->getStore()->getBaseUrl()
+                    ]
+                );
+                $breadcrumbsBlock->addCrumb(
+                    'blog',
+                    [
+                        'label' => __(
+                            $this->_scopeConfig->getValue(
+                                'skywire_wordpress_api/api/nav_name',
+                                ScopeInterface::SCOPE_STORE
+                            )
+                        ),
+                        'title' => __(
+                            $this->_scopeConfig->getValue(
+                                'skywire_wordpress_api/api/nav_name',
+                                ScopeInterface::SCOPE_STORE
+                            )
+                        ),
+                        'link'  => $this->getUrl(
+                            $this->_scopeConfig->getValue(
+                                'skywire_wordpress_api/api/sub_dir',
+                                ScopeInterface::SCOPE_STORE
+                            )
+                        )
+                    ]
+                );
+                $breadcrumbsBlock->addCrumb(
+                    'post',
+                    [
+                        'label' => __($title),
+                        'title' => __($title)
+                    ]
+                );
+            }
 
         return parent::_prepareLayout();
     }
