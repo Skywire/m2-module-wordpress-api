@@ -41,10 +41,10 @@ class Spider
         StoreManagerInterface $storeManager,
         array $types = []
     ) {
-        $this->scopeConfig = $scopeConfig;
-        $this->types       = $types;
-        $this->apiClient   = $apiClient;
-        $this->pathFactory = $pathFactory;
+        $this->scopeConfig  = $scopeConfig;
+        $this->types        = $types;
+        $this->apiClient    = $apiClient;
+        $this->pathFactory  = $pathFactory;
         $this->storeManager = $storeManager;
     }
 
@@ -55,10 +55,10 @@ class Spider
      */
     public function getPaths()
     {
-        $paths = [];
+        $paths  = [];
         $stores = $this->storeManager->getStores();
 
-        foreach($stores as $store) {
+        foreach ($stores as $store) {
             $storeCode = $store->getCode();
             $this->storeManager->setCurrentStore($storeCode);
 
@@ -67,7 +67,7 @@ class Spider
                 $nextPage = true;
                 $page     = 1;
                 while ($nextPage) {
-                    $apiPath = $this->scopeConfig->getValue(
+                    $apiPath  = $this->scopeConfig->getValue(
                         'skywire_wordpress_api/api/path',
                         ScopeInterface::SCOPE_STORE
                     );
@@ -86,17 +86,18 @@ class Spider
                         /** @var Path $path */
                         $paths[] = $this->pathFactory->create()->setData(
                             [
-                                'type' => $type,
-                                'slug' => $item['slug'],
-                                'path' => "$type/{$item['slug']}",
-                                'store_code' => $storeCode
+                                'type'       => $type,
+                                'slug'       => $item['slug'],
+                                'path'       => "$type/{$item['slug']}",
+                                'store_code' => $storeCode,
+                                'title'      => $item['name'] ?? $item['title']['rendered'],
                             ]
                         );
                     }
 
                     $headers = $response->getHeaders();
 
-                    if ($headers['X-WP-TotalPages'][0] <= $page) {
+                    if (!isset($headers['X-WP-TotalPages']) || $headers['X-WP-TotalPages'][0] <= $page) {
                         $nextPage = false;
                     }
                     $page++;

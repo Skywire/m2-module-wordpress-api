@@ -6,6 +6,7 @@
             "type": true,
             "path": true,
             "slug": true,
+            "title": true,
             "created_at": true
         },
         "constraint": {
