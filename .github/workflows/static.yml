@@ -1,0 +1,67 @@
+name: PHP Static Analysis
+
+on:
+    push:
+        branches: [ develop ]
+    pull_request:
+        branches: [ master, develop ]
+
+jobs:
+    phpcs:
+        runs-on: ubuntu-latest
+        env:
+            extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip, libxml
+            key: php-cache-v1 # can be any string, change to clear the extension cache.
+            php-version: '7.3'
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Get Composer Cache Directory
+              id: composer-cache
+              run: |
+                  echo "::set-output name=dir::$(composer config cache-files-dir)"
+            - uses: actions/cache@v1
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-composer-
+
+            - name: Setup PHP cache environment
+              id: extcache
+              uses: shivammathur/cache-extensions@v1
+              with:
+                php-version: ${{ env.php-version }}
+                extensions: ${{ env.extensions }}
+                key: ${{ env.key }}
+
+            - name: Cache PHP extensions
+              uses: actions/cache@v2
+              with:
+                path: ${{ steps.extcache.outputs.dir }}
+                key: ${{ steps.extcache.outputs.key }}
+                restore-keys: ${{ steps.extcache.outputs.key }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ env.php-version }}
+                  extensions: ${{ env.extensions }}
+                  coverage: xdebug
+            - name: Install CodeSniffer
+              run: |
+                git clone https://github.com/Skywire/skywire-coding-standard.git
+                cd skywire-coding-standard
+                composer install
+                cd ../
+
+            - name: Run CodeSniffer with Magneto2 standard
+              run: |
+                  ./skywire-coding-standard/vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
+                  ./skywire-coding-standard/vendor/bin/phpcs --standard=Skywire --severity=7 --basepath=$GITHUB_WORKSPACE --report=csv --report-file=phpcs-report.csv --extensions=php,js,css,inc,xml,phtml src
+            - name: Upload report
+              if: always()
+              uses: actions/upload-artifact@v1
+              with:
+                  name: phpcs-report
+                  path: phpcs-report.csv
