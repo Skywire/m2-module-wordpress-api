@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace Skywire\WordpressApi\Plugin\Controller;
 
 use Magento\Framework\View\Page\Config;
+use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Skywire\WordpressApi\Controller\AbstractAction;
 use Skywire\WordpressApi\Helper\RequestHelper;
@@ -47,23 +48,31 @@ class ApplyCanonical
      */
     protected $storeManager;
 
-    public function __construct(RequestHelper $requestHelper, Config $pageConfig, StoreManagerInterface $storeManager)
+    /**
+     * @var ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    public function __construct(RequestHelper $requestHelper, Config $pageConfig, StoreManagerInterface $storeManager, ScopeConfigInterface $scopeConfig)
     {
         $this->requestHelper = $requestHelper;
         $this->pageConfig    = $pageConfig;
         $this->storeManager  = $storeManager;
+        $this->scopeConfig = $scopeConfig;
     }
 
     public function afterDispatch(AbstractAction $subject, $result)
     {
-        $slug = $this->requestHelper->getSlug($subject->getRequest());
+        if ($this->scopeConfig->getValue('skywire_wordpress_api/seo/enable_canonical')) {
+            $slug = $this->requestHelper->getSlug($subject->getRequest());
 
-        if ($slug) {
-            $this->pageConfig->addRemotePageAsset(
-                $this->storeManager->getStore()->getBaseUrl() . $slug,
-                'canonical',
-                ['attributes' => ['rel' => 'canonical']]
-            );
+            if ($slug) {
+                $this->pageConfig->addRemotePageAsset(
+                    $this->storeManager->getStore()->getBaseUrl() . $slug,
+                    'canonical',
+                    ['attributes' => ['rel' => 'canonical']]
+                );
+            }
         }
 
         return $result;
