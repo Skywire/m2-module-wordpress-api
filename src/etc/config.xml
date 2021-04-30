@@ -16,7 +16,7 @@
                 <cron_schedule>0 0 * * *</cron_schedule>
             </indexing>
             <seo>
-                <enable_canonical>0</enable_canonical>
+                <enable_canonical>1</enable_canonical>
             </seo>
         </skywire_wordpress_api>
     </default>

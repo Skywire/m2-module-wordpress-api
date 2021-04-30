@@ -5,9 +5,10 @@ namespace Skywire\WordpressApi\Model\Index;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 use Skywire\WordpressApi\Api\Data\Index\PathInterface;
+use Skywire\WordpressApi\Model\ResourceModel\Index\Path as ResourcePath;
 
 /**
- * @method \Skywire\WordpressApi\Model\ResourceModel\Index\Path getResource()
+ * @method ResourcePath getResource()
  * @method \Skywire\WordpressApi\Model\ResourceModel\Index\Path\Collection getCollection()
  * @method string getType();
  * @method self setType(string $type);
@@ -26,7 +27,7 @@ class Path extends AbstractModel implements PathInterface, IdentityInterface
 
     protected function _construct()
     {
-        $this->_init('Skywire\WordpressApi\Model\ResourceModel\Index\Path');
+        $this->_init(ResourcePath::class);
     }
 
     public function getIdentities()
