@@ -12,6 +12,10 @@ jobs:
     strategy:
       matrix:
         php-version: ['7.2', '7.3']
+    env:
+      extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip, libxml
+      key: php-cache-v1 # can be any string, change to clear the extension cache.
+
     steps:
       - uses: actions/checkout@v2
 
@@ -22,11 +26,26 @@ jobs:
           rabbitmq user: 'guest'
           rabbitmq password: 'guest'
 
+      - name: Setup PHP cache environment
+        id: extcache
+        uses: shivammathur/cache-extensions@v1
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: ${{ env.extensions }}
+          key: ${{ env.key }}
+
+      - name: Cache PHP extensions
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.extcache.outputs.dir }}
+          key: ${{ steps.extcache.outputs.key }}
+          restore-keys: ${{ steps.extcache.outputs.key }}
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip
+          extensions: ${{ env.extensions }}
           coverage: xdebug
 
       - name: Get Composer Cache Directory
@@ -84,14 +103,10 @@ jobs:
           ../../../vendor/bin/phpunit -c phpunit.xml
           cd ../
 
-      - name: Install canned server
-        run: sudo npm -g install canned
-
       - name: Integration Tests
         run: |
           cd magento
           cp -r .github/workflows/config/integration/* dev/tests/integration/
-          nohup canned vendor/skywire/wordpressapi/src/Test/Integration/canned > /dev/null 2>&1 &
           cd dev/tests/integration
           ../../../vendor/bin/phpunit -c phpunit.xml
           cd ../
