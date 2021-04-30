@@ -58,7 +58,7 @@
                 <label>SEO</label>
                 <field id="enable_canonical" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Canonical URL's</label>
-                    <comment>Some SEO modules add in canonical URL's for you. If not, enable them here</comment>
+                    <comment>Some SEO modules add in canonical URL's for you. Disable the core one here if required</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>

@@ -8,7 +8,7 @@ on:
 
 jobs:
   run_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
         php-version: ['7.2', '7.3']
@@ -46,7 +46,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: ${{ env.extensions }}
-          coverage: xdebug
+          coverage: xdebug2
+          tools: composer:v1
 
       - name: Get Composer Cache Directory
         id: composer-cache
@@ -65,9 +66,8 @@ jobs:
           composer config -g github-protocols https # Only add this if you're testing a public repo. It  will ensure everythings cloned via HTTPS not SSH.
           composer config -g http-basic.repo.magento.com ${{ secrets.MAGENTO_USERNAME}} ${{ secrets.MAGENTO_PASSWORD}}
           composer config -g github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
-          composer config -g http-basic.repo.packagist.com tech@skywire.co.uk ${{ secrets.PACKAGIST_KEY }}
-          composer config -g repositories.repo.packagist.com composer https://repo.packagist.com/skywire/
-          composer config -g repositories.packagist.org false
+          composer config -g http-basic.skywire.repo.repman.io token ${{ secrets.REPMAN_KEY }}
+          composer config -g repositories.skywire.repo.repman.io composer https://skywire.repo.repman.io
 
       - name: Download magento
         id: download-magento
@@ -103,10 +103,14 @@ jobs:
           ../../../vendor/bin/phpunit -c phpunit.xml
           cd ../
 
+      - name: Install canned server
+        run: sudo npm -g install canned
+
       - name: Integration Tests
         run: |
           cd magento
           cp -r .github/workflows/config/integration/* dev/tests/integration/
+          nohup canned vendor/skywire/wordpressapi/src/Test/Integration/canned > /dev/null 2>&1 &
           cd dev/tests/integration
           ../../../vendor/bin/phpunit -c phpunit.xml
           cd ../

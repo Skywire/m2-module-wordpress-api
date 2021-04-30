@@ -189,7 +189,9 @@ abstract class ApiAbstract
     protected function _getCacheKey($route, $params, $storeCode)
     {
         $key = $route;
+        // phpcs:disable
         $key .= md5(serialize($params));
+        // phpcs:enable
         $key .= $storeCode;
 
         return $key;

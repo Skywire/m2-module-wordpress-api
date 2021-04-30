@@ -22,8 +22,8 @@ declare(strict_types=1);
 
 namespace Skywire\WordpressApi\Plugin\Controller;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Page\Config;
-use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Skywire\WordpressApi\Controller\AbstractAction;
 use Skywire\WordpressApi\Helper\RequestHelper;

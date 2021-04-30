@@ -2,6 +2,9 @@
 
 namespace Skywire\WordpressApi\Model\ResourceModel\Index\Path;
 
+use Skywire\WordpressApi\Model\Index\Path;
+use Skywire\WordpressApi\Model\ResourceModel\Index\Path as ResourcePath;
+
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
 
@@ -13,7 +16,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
 
     protected function _construct()
     {
-        $this->_init('Skywire\WordpressApi\Model\Index\Path', 'Skywire\WordpressApi\Model\ResourceModel\Index\Path');
+        $this->_init(Path::class, ResourcePath::class);
     }
 
 }
