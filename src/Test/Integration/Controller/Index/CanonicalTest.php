@@ -25,7 +25,7 @@ class CanonicalTest extends AbstractControllerTest
         $response = $this->getResponse();
         $this->assertEquals(200, $response->getHttpResponseCode());
         $this->assertRegExp(
-            '/<link\s*rel="canonical"\s*href=".*aut-architecto-nihil"/',
+            '/<link\s*rel="canonical"\s*href=".*aut-architecto-nihil\/"/',
             $response->getBody()
         );
     }
