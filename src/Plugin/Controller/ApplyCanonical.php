@@ -82,14 +82,13 @@ class ApplyCanonical
                 foreach ($this->pageConfig->getAssetCollection()->getAll() as $asset) {
                     if ($asset->getContentType() == 'canonical') {
                         $this->pageConfig->getAssetCollection()->remove($asset->getUrl());
-
-                        $this->pageConfig->addRemotePageAsset(
-                            $this->urlBuilder->getUrl($subDir . '/' . $slug),
-                            'canonical',
-                            ['attributes' => ['rel' => 'canonical']]
-                        );
                     }
                 }
+                $this->pageConfig->addRemotePageAsset(
+                    $this->urlBuilder->getUrl($subDir . '/' . $slug),
+                    'canonical',
+                    ['attributes' => ['rel' => 'canonical']]
+                );
             }
         }
 
