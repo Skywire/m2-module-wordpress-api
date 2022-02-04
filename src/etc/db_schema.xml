@@ -8,6 +8,7 @@
         <column xsi:type="varchar" name="path" nullable="false" length="255" comment="Path"/>
         <column xsi:type="varchar" name="slug" nullable="false" length="255" comment="Slug"/>
         <column xsi:type="text" name="title" nullable="true" comment="Title"/>
+        <column xsi:type="int" name="post_id" nullable="true" comment="Wordpress Post ID"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
                 comment="Creation Time"/>
 

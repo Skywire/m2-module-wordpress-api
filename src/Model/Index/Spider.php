@@ -90,6 +90,7 @@ class Spider
                                 'slug'       => $item['slug'],
                                 'path'       => "$type/{$item['slug']}",
                                 'store_code' => $storeCode,
+                                'post_id'    => $item['id'],
                                 'title'      => $item['name'] ?? $item['title']['rendered'],
                             ]
                         );
