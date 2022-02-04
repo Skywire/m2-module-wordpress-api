@@ -7,6 +7,7 @@
             "path": true,
             "slug": true,
             "title": true,
+            "post_id": true,
             "created_at": true
         },
         "constraint": {
