@@ -8,8 +8,8 @@
 
 namespace Skywire\WordpressApi\Block\Category;
 
-use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
+use Skywire\WordpressApi\Api\DataProvider\CurrentEntityProviderInterface;
 use Skywire\WordpressApi\Block\Category;
 use Skywire\WordpressApi\Helper\RequestHelper;
 
@@ -27,13 +27,14 @@ class Pagination
 
     public function __construct(
         Template\Context $context,
-        Registry $registry,
+        CurrentEntityProviderInterface $currentEntityProvider,
+
         \Skywire\WordpressApi\Model\Api\Post $postApi,
         RequestHelper $requestHelper,
         array $data = []
     ) {
         $this->requestHelper = $requestHelper;
-        parent::__construct($context, $registry, $postApi, $data);
+        parent::__construct($context, $currentEntityProvider, $postApi, $data);
     }
 
     public function getPrevPageUrl()

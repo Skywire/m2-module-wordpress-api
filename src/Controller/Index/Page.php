@@ -8,8 +8,8 @@ namespace Skywire\WordpressApi\Controller\Index;
 
 
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\Registry;
 use Magento\Framework\View\Result\PageFactory;
+use Skywire\WordpressApi\Api\DataProvider\CurrentEntityProviderInterface;
 use Skywire\WordpressApi\Controller\AbstractAction;
 use Skywire\WordpressApi\Helper\RequestHelper;
 
@@ -20,6 +20,8 @@ use Skywire\WordpressApi\Helper\RequestHelper;
 class Page
     extends AbstractAction
 {
+    protected CurrentEntityProviderInterface $currentEntityProvider;
+
     /**
      * @var RequestHelper
      */
@@ -30,22 +32,17 @@ class Page
      */
     private $pageApi;
 
-    /**
-     * @var Registry
-     */
-    private $registry;
-
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
         RequestHelper $requestHelper,
-        Registry $registry,
+        CurrentEntityProviderInterface $currentEntityProvider,
         \Skywire\WordpressApi\Model\Api\Page $pageApi
     ) {
         parent::__construct($context, $resultPageFactory);
-        $this->requestHelper = $requestHelper;
-        $this->pageApi       = $pageApi;
-        $this->registry      = $registry;
+        $this->requestHelper         = $requestHelper;
+        $this->pageApi               = $pageApi;
+        $this->currentEntityProvider = $currentEntityProvider;
     }
 
     public function execute()
@@ -54,7 +51,7 @@ class Page
         $collection = $this->pageApi->getCollection(['slug' => $identifier]);
         if (count($collection)) {
             $page = $collection->getFirstItem();
-            $this->registry->register('current_page', $page);
+            $this->currentEntityProvider->setCurrentPage($page);
 
             $resultPage = $this->_resultPageFactory->create();
             $resultPage->getConfig()->getTitle()->set($page->getTitle()->getRendered());

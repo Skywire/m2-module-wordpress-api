@@ -10,9 +10,10 @@
             </argument>
         </arguments>
     </type>
-    
+
     <preference for="Skywire\WordpressApi\Api\Data\Index\PathInterface" type="Skywire\WordpressApi\Model\Index\Path" />
     <preference for="Skywire\WordpressApi\Api\Index\PathRepositoryInterface" type="Skywire\WordpressApi\Model\Index\PathRepository" />
+    <preference for="Skywire\WordpressApi\Api\DataProvider\CurrentEntityProviderInterface" type="Skywire\WordpressApi\DataProvider\CurrentEntityProvider" />
 
     <type name="\Skywire\WordpressApi\Controller\AbstractAction">
         <plugin name="skywire_wordpressapi_canonical" type="\Skywire\WordpressApi\Plugin\Controller\ApplyCanonical" />

@@ -7,9 +7,9 @@
 namespace Skywire\WordpressApi\Block;
 
 use Magento\Framework\DataObject;
-use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
+use Skywire\WordpressApi\Api\DataProvider\CurrentEntityProviderInterface;
 use Skywire\WordpressApi\Model\Api\Media;
 use Skywire\WordpressApi\Model\Api\Tags;
 
@@ -20,10 +20,7 @@ use Skywire\WordpressApi\Model\Api\Tags;
 class Post
     extends \Magento\Framework\View\Element\Template
 {
-    /**
-     * @var Registry
-     */
-    private $registry;
+    protected CurrentEntityProviderInterface $currentEntityProvider;
 
     /**
      * @var Media
@@ -37,15 +34,15 @@ class Post
 
     public function __construct(
         Template\Context $context,
-        Registry $registry,
+        CurrentEntityProviderInterface $currentEntityProvider,
         Media $mediaApi,
         Tags $tagsApi,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->registry = $registry;
         $this->mediaApi = $mediaApi;
         $this->tagsApi = $tagsApi;
+        $this->currentEntityProvider = $currentEntityProvider;
     }
 
     /**
@@ -96,7 +93,7 @@ class Post
             return $this->getData('post');
         }
 
-        return $this->registry->registry('current_post');
+        return $this->currentEntityProvider->getCurrentPost();
     }
 
     /**

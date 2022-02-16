@@ -7,9 +7,9 @@
 namespace Skywire\WordpressApi\Block;
 
 use Magento\Framework\DataObject;
-use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
+use Skywire\WordpressApi\Api\DataProvider\CurrentEntityProviderInterface;
 use Skywire\WordpressApi\Model\Data\Collection;
 
 /**
@@ -22,11 +22,6 @@ class Category
     const WP_API_MAX_PER_PAGE = 100;
 
     /**
-     * @var Registry
-     */
-    protected $registry;
-
-    /**
      * @var \Skywire\WordpressApi\Model\Api\Post
      */
     protected $postApi;
@@ -34,15 +29,17 @@ class Category
     /** @var Collection */
     protected $posts;
 
+    protected CurrentEntityProviderInterface $currentEntityProvider;
+
     public function __construct(
         Template\Context $context,
-        Registry $registry,
+        CurrentEntityProviderInterface $currentEntityProvider,
         \Skywire\WordpressApi\Model\Api\Post $postApi,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->registry = $registry;
         $this->postApi  = $postApi;
+        $this->currentEntityProvider = $currentEntityProvider;
     }
 
     /**
@@ -105,7 +102,7 @@ class Category
         if($this->getData('category')) {
             return $this->getData('category');
         }
-        return $this->registry->registry('current_category');
+        return $this->currentEntityProvider->getCurrentCategory();
     }
 
     /**

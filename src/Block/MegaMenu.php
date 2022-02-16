@@ -8,8 +8,8 @@ namespace Skywire\WordpressApi\Block;
 
 use DateTime;
 use Magento\Framework\DataObject;
-use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
+use Skywire\WordpressApi\Api\DataProvider\CurrentEntityProviderInterface;
 use Skywire\WordpressApi\Helper\RequestHelper;
 use Skywire\WordpressApi\Model\Api\ApiException;
 use Skywire\WordpressApi\Model\Api\Category as CategoryApi;
@@ -44,7 +44,7 @@ class MegaMenu extends Post
 
     public function __construct(
         Template\Context $context,
-        Registry $registry,
+        CurrentEntityProviderInterface $currentEntityProvider,
         Media $mediaApi,
         Tags $tagsApi,
         PostApi $postApi,
@@ -52,7 +52,7 @@ class MegaMenu extends Post
         RequestHelper $requestHelper,
         array $data = []
     ) {
-        parent::__construct($context, $registry, $mediaApi, $tagsApi, $data);
+        parent::__construct($context, $currentEntityProvider, $mediaApi, $tagsApi, $data);
         $this->postApi       = $postApi;
         $this->categoryApi   = $categoryApi;
         $this->requestHelper = $requestHelper;

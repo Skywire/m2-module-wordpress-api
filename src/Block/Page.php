@@ -7,9 +7,9 @@
 namespace Skywire\WordpressApi\Block;
 
 use Magento\Framework\DataObject;
-use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
+use Skywire\WordpressApi\Api\DataProvider\CurrentEntityProviderInterface;
 
 /**
  * @package     Skywire\WordpressApi\Block
@@ -18,23 +18,20 @@ use Magento\Store\Model\ScopeInterface;
 class Page
     extends \Magento\Framework\View\Element\Template
 {
-
-    /**
-     * @var Registry
-     */
-    private $registry;
+    protected CurrentEntityProviderInterface $currentEntityProvider;
 
     public function __construct(
         Template\Context $context,
-        Registry $registry,
+        CurrentEntityProviderInterface $currentEntityProvider,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->registry = $registry;
+        $this->currentEntityProvider = $currentEntityProvider;
     }
 
     /**
      * override to add in breadcrumbs
+     *
      * @return mixed
      */
     protected function _prepareLayout()
@@ -46,25 +43,37 @@ class Page
                 [
                     'label' => __('Home'),
                     'title' => __('Home'),
-                    'link'  => $this->_storeManager->getStore()->getBaseUrl()
+                    'link'  => $this->_storeManager->getStore()->getBaseUrl(),
                 ]
             );
             $breadcrumbsBlock->addCrumb(
                 'blog',
                 [
-                    'label' => __($this->_scopeConfig->getValue('skywire_wordpress_api/api/nav_name',
-                        ScopeInterface::SCOPE_STORE)),
-                    'title' => __($this->_scopeConfig->getValue('skywire_wordpress_api/api/nav_name',
-                        ScopeInterface::SCOPE_STORE)),
-                    'link'  => $this->getUrl($this->_scopeConfig->getValue('skywire_wordpress_api/api/sub_dir',
-                        ScopeInterface::SCOPE_STORE))
+                    'label' => __(
+                        $this->_scopeConfig->getValue(
+                            'skywire_wordpress_api/api/nav_name',
+                            ScopeInterface::SCOPE_STORE
+                        )
+                    ),
+                    'title' => __(
+                        $this->_scopeConfig->getValue(
+                            'skywire_wordpress_api/api/nav_name',
+                            ScopeInterface::SCOPE_STORE
+                        )
+                    ),
+                    'link'  => $this->getUrl(
+                        $this->_scopeConfig->getValue(
+                            'skywire_wordpress_api/api/sub_dir',
+                            ScopeInterface::SCOPE_STORE
+                        )
+                    ),
                 ]
             );
             $breadcrumbsBlock->addCrumb(
                 'post',
                 [
                     'label' => __($title),
-                    'title' => __($title)
+                    'title' => __($title),
                 ]
             );
         }
@@ -75,6 +84,6 @@ class Page
     /** @return DataObject */
     public function getPage()
     {
-        return $this->registry->registry('current_page');
+        return $this->currentEntityProvider->getCurrentPage();
     }
 }

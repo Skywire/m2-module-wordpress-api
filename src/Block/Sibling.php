@@ -7,8 +7,8 @@
 namespace Skywire\WordpressApi\Block;
 
 use Magento\Framework\DataObject;
-use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
+use Skywire\WordpressApi\Api\DataProvider\CurrentEntityProviderInterface;
 use Skywire\WordpressApi\Model\Api\Media;
 use Skywire\WordpressApi\Model\Api\Tags;
 
@@ -33,13 +33,13 @@ class Sibling
 
     public function __construct(
         Template\Context $context,
-        Registry $registry,
+        CurrentEntityProviderInterface $currentEntityProvider,
         Media $mediaApi,
         Tags $tagsApi,
         \Skywire\WordpressApi\Model\Api\Post $postApi,
         array $data = []
     ) {
-        parent::__construct($context, $registry, $mediaApi, $tagsApi, $data);
+        parent::__construct($context, $currentEntityProvider, $mediaApi, $tagsApi, $data);
         $this->postApi = $postApi;
     }
 
