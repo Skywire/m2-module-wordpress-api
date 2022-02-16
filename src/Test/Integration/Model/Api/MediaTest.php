@@ -14,6 +14,10 @@ use Skywire\WordpressApi\Test\Integration\Model\Api\AbstractApiTest;
  */
 class MediaTest extends AbstractApiTest
 {
+    /**
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/path /
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
+     */
     public function testGetCollection()
     {
         $media  = $this->objectManager->get(Media::class);
@@ -23,6 +27,10 @@ class MediaTest extends AbstractApiTest
         $this->assertEquals(36, $result->getFirstItem()->getId());
     }
 
+    /**
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/path /
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
+     */
     public function testGetEntity()
     {
         $media  = $this->objectManager->get(Media::class);

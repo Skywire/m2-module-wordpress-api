@@ -25,6 +25,6 @@ class PageTest extends AbstractControllerTest
         $response = $this->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains('sample-page', $response->getBody());
+        $this->assertStringContainsString('sample-page', $response->getBody());
     }
 }

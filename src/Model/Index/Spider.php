@@ -71,7 +71,7 @@ class Spider
                         'skywire_wordpress_api/api/path',
                         ScopeInterface::SCOPE_STORE
                     );
-                    $response = $client->get($apiPath . '/' . $type . '?per_page=100&page=' . $page);
+                    $response = $client->get(rtrim($apiPath, '/') . '/' . $type . '?per_page=100&page=' . $page);
 
                     $body = (string)$response->getBody();
 

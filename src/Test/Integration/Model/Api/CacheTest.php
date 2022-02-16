@@ -14,7 +14,11 @@ use Skywire\WordpressApi\Test\Integration\Model\Api\AbstractApiTest;
  */
 class CacheTest extends AbstractApiTest
 {
-    /** @magentoAppIsolation enabled */
+    /**
+     * @magentoAppIsolation                enabled
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/path /
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
+     */
     public function testGetCollection()
     {
         $category = $this->objectManager->get(Category::class);
@@ -24,7 +28,7 @@ class CacheTest extends AbstractApiTest
         $this->assertEquals($result, $cached);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $manager = $this->objectManager->get(\Magento\Framework\App\Cache\Manager::class);
         $manager->setEnabled(['skywire_wordpress_api'], true);
@@ -32,7 +36,7 @@ class CacheTest extends AbstractApiTest
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $manager = $this->objectManager->get(\Magento\Framework\App\Cache\Manager::class);
         $manager->setEnabled(['skywire_wordpress_api'], false);

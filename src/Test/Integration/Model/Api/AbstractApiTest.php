@@ -12,7 +12,11 @@ namespace Skywire\WordpressApi\Test\Integration\Model\Api;
  */
 abstract class AbstractApiTest extends \Skywire\TestFramework\Integration\TestCase
 {
-    protected function setUp()
+    /**
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/path /
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
+     */
+    protected function setUp(): void
     {
         parent::setUp();
 

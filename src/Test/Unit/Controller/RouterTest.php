@@ -97,7 +97,7 @@ class RouterTest extends TestCase
         $this->assertFalse($matched);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->postApi     = $this->getMockBuilder(Post::class)->disableOriginalConstructor()->setMethods(['getCollection'])->getMock();
         $this->categoryApi = $this->getMockBuilder(Category::class)->disableOriginalConstructor()->setMethods(['getCollection'])->getMock();

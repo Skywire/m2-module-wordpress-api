@@ -51,7 +51,7 @@ class RequestHelperTest extends TestCase
         $this->assertEquals('localhost/path/to/index', $this->helper->getUrlWithoutPagination($request));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->helper = $this->objectManager->getObject(RequestHelper::class);
 

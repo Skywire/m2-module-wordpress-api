@@ -24,6 +24,6 @@ class CategoryTest extends AbstractControllerTest
         $this->dispatch('blog/aut-architecto-nihil');
         $response = $this->getResponse();
         $this->assertEquals(200, $response->getHttpResponseCode());
-        $this->assertContains('aut-architecto-nihil', $response->getBody());
+        $this->assertStringContainsString('aut-architecto-nihil', $response->getBody());
     }
 }

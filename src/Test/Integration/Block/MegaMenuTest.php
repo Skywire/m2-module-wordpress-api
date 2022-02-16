@@ -92,7 +92,7 @@ class MegaMenuTest extends TestCase
         return file_get_contents(__DIR__ . '/../_files/latest_posts.json');
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $categoryData = $this->getCategoryData();
         $mock         = new MockHandler([

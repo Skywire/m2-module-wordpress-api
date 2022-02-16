@@ -14,6 +14,10 @@ use Skywire\WordpressApi\Test\Integration\Model\Api\AbstractApiTest;
  */
 class PostTest extends AbstractApiTest
 {
+    /**
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/path /
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
+     */
     public function testGetCollection()
     {
         $post   = $this->objectManager->get(Post::class);
@@ -23,6 +27,10 @@ class PostTest extends AbstractApiTest
         $this->assertEquals(1, $result->getFirstItem()->getId());
     }
 
+    /**
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/path /
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
+     */
     public function testGetEntity()
     {
         $post   = $this->objectManager->get(Post::class);

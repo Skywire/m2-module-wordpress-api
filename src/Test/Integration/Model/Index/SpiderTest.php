@@ -2,11 +2,15 @@
 
 namespace Skywire\WordpressApi\Model\Index;
 
-use Skywire\TestFramework\Integration\TestCase;
 use Skywire\WordpressApi\Test\Integration\Model\Api\AbstractApiTest;
 
 class SpiderTest extends AbstractApiTest
 {
+    /**
+     * @magentoAppIsolation                enabled
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/path /
+     * @magentoConfigFixture               current_store skywire_wordpress_api/api/base_url http://localhost:3000
+     */
     public function testRun()
     {
         /** @var Spider $spider */
@@ -19,8 +23,8 @@ class SpiderTest extends AbstractApiTest
         // randomise the paths and check a subset
         shuffle($paths);
         foreach (array_slice($paths, 0, 10) as $path) {
-            $this->assertInternalType('string', $path->getType());
-            $this->assertInternalType('string', $path->getPath());
+            $this->assertIsString($path->getType());
+            $this->assertIsString($path->getPath());
             $this->assertNotEmpty($path->getType());
             $this->assertNotEmpty($path->getPath());
         }

@@ -25,6 +25,6 @@ class PostTest extends AbstractControllerTest
         $response = $this->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains('hello-world', $response->getBody());
+        $this->assertStringContainsString('hello-world', $response->getBody());
     }
 }
