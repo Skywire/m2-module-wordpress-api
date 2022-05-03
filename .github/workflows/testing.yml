@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        php-version: ['7.2', '7.3']
+        php-version: ['7.4']
     env:
       extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip, libxml
       key: php-cache-v1 # can be any string, change to clear the extension cache.
@@ -46,8 +46,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: ${{ env.extensions }}
-          coverage: xdebug2
-          tools: composer:v1
+          coverage: xdebug
+          tools: composer:v2
 
       - name: Get Composer Cache Directory
         id: composer-cache
@@ -72,7 +72,7 @@ jobs:
       - name: Download magento
         id: download-magento
         run: |
-          composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.3.4 ./magento
+          composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.4 ./magento
 
       - name: Add module under test
         id: add-module
