@@ -4,7 +4,7 @@
     "license": 	"OSL-3.0",
     "require": {
         "php": "^7.4|^8.0|^8.1",
-        "magento/magento-composer-installer": "*",
+        "magento/framework": "~103.0.4",
         "skywire/testframework":"*",
         "guzzlehttp/guzzle": "^7.4.2"
     },
