@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        php-version: ['7.2', '7.3']
+        php-version: ['7.4']
     env:
       extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip, libxml
       key: php-cache-v1 # can be any string, change to clear the extension cache.
@@ -98,7 +98,6 @@ jobs:
       - name: Unit Tests
         run: |
           cd magento
-          cp .github/workflows/config/unit/* dev/tests/unit/
           cd dev/tests/unit
           ../../../vendor/bin/phpunit -c phpunit.xml
           cd ../
@@ -109,7 +108,6 @@ jobs:
       - name: Integration Tests
         run: |
           cd magento
-          cp -r .github/workflows/config/integration/* dev/tests/integration/
           nohup canned vendor/skywire/wordpressapi/src/Test/Integration/canned > /dev/null 2>&1 &
           cd dev/tests/integration
           ../../../vendor/bin/phpunit -c phpunit.xml
