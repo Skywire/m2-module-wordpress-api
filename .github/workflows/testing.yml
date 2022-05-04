@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        php-version: ['7.2', '7.3']
+        php-version: ['7.4']
     env:
       extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip, libxml
       key: php-cache-v1 # can be any string, change to clear the extension cache.
