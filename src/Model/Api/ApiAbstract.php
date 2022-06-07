@@ -75,7 +75,7 @@ abstract class ApiAbstract
 
         $collection = $this->_createCollection(\Zend_Json::decode($response->getBody()));
 
-        if ($totalPages = $response->getHeader('x-wp-totalpages')) {
+        if ($totalPages = $response->getHeader('X-WP-TotalPages')) {
             if (is_array($totalPages)) {
                 $totalPages = $totalPages[0];
             }
