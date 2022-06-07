@@ -98,7 +98,7 @@ class Spider
 
                     $headers = $response->getHeaders();
 
-                    if (!isset($headers['x-wp-totalpages']) || $headers['x-wp-totalpages'][0] <= $page) {
+                    if (!isset($headers['X-WP-TotalPages']) || $headers['X-WP-TotalPages'][0] <= $page) {
                         $nextPage = false;
                     }
                     $page++;
