@@ -8,15 +8,13 @@
 namespace Skywire\WordpressApi\Model\Api;
 
 
+use GuzzleHttp\Psr7\Message;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\DataObject;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Skywire\WordpressApi\Model\Data\Collection;
 use Skywire\WordpressApi\Model\Data\CollectionFactory;
-
-use function GuzzleHttp\Psr7\parse_response;
-use function GuzzleHttp\Psr7\str;
 
 /**
  * @package     Skywire\WordpressApi\Model\Api
@@ -124,8 +122,11 @@ abstract class ApiAbstract
         return $collection;
     }
 
-    protected function _populateApiData(array $data = [], $targetObject)
+    protected function _populateApiData(array $data, $targetObject)
     {
+        if(!$data) {
+            return $targetObject;
+        }
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $value = $this->_populateApiData($value, new DataObject());
@@ -151,7 +152,8 @@ abstract class ApiAbstract
      */
     protected function _parseRoute($id = '')
     {
-        $apiPath = trim($this->scopeConfig->getValue('skywire_wordpress_api/api/path', ScopeInterface::SCOPE_STORE), '/');
+        $apiPath  = $this->scopeConfig->getValue('skywire_wordpress_api/api/path', ScopeInterface::SCOPE_STORE) ?? '';
+        $apiPath = trim($apiPath, '/');
         $route   = str_replace(':id', $id, $this->_getRoute());
         $route   = trim($route, '/');
 
@@ -170,7 +172,7 @@ abstract class ApiAbstract
         $cacheKey = $this->_getCacheKey($route, $params, $this->storeManager->getStore()->getCode());
         $cached   = $this->cache->load($cacheKey);
         if ($cached) {
-            return parse_response($cached);
+            return Message::parseResponse($cached);
         }
 
         $client = $this->getRestClient();
@@ -181,7 +183,7 @@ abstract class ApiAbstract
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
 
-        $this->cache->save(str($response), $cacheKey, [], $this->scopeConfig->getValue('skywire_wordpress_api/api/cache_ttl'));
+        $this->cache->save(Message::toString($response), $cacheKey, [], $this->scopeConfig->getValue('skywire_wordpress_api/api/cache_ttl'));
 
         return $response;
     }

@@ -8,10 +8,10 @@ on:
 
 jobs:
   run_tests:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: ['7.2', '7.3']
+        php-version: ['8.1']
     env:
       extensions: bcmath, ctype, curl, dom, gd, hash, iconv, intl, mbstring, openssl, pdo_mysql, simplexml, soap, xsl, zip, libxml
       key: php-cache-v1 # can be any string, change to clear the extension cache.
@@ -46,8 +46,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: ${{ env.extensions }}
-          coverage: xdebug2
-          tools: composer:v1
+          coverage: xdebug3
+          tools: composer:v2
 
       - name: Get Composer Cache Directory
         id: composer-cache
@@ -72,14 +72,14 @@ jobs:
       - name: Download magento
         id: download-magento
         run: |
-          composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.3.4 ./magento
+          composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.5 ./magento
 
       - name: Add module under test
         id: add-module
         run: |
           cd magento
           composer require `jq -r .name ../composer.json` dev-${{ github.head_ref }} --prefer-source --no-update
-          composer require skywire/m2-actions-workflow ^1.0.0 --prefer-source --no-update
+          composer require skywire/m2-actions-workflow ^2.1 --prefer-source --no-update
           cd ../
 
       - name: Install MySQL
@@ -89,9 +89,15 @@ jobs:
           mysql database: 'magento_integration_tests'
           mysql root password: 123123q
 
+      - name: Runs Elasticsearch
+        uses: elastic/elastic-github-actions/elasticsearch@master
+        with:
+          stack-version: 7.17.6
+
       - name: Install Dependencies
         run: |
           cd magento
+          composer config --no-plugins allow-plugins.skywire/file-copy-plugin true
           composer install --no-interaction
           cd ../
 
