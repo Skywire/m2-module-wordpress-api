@@ -6,7 +6,7 @@
         "php": "^7.0|^7.1|^7.2|^7.3|^7.4|^8",
         "magento/magento-composer-installer": "*",
         "skywire/testframework":"*",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^7.4"
     },
     "type": "magento2-module",
     "repositories": {
@@ -22,5 +22,8 @@
         "psr-4": {
             "Skywire\\WordpressApi\\": "src"
         }
+    },
+    "config": {
+        "allow-plugins": true
     }
 }
