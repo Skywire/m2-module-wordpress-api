@@ -215,7 +215,8 @@ abstract class ApiAbstract
 
             $client = new \GuzzleHttp\Client([
                 'base_uri' => $this->getBaseUri(),
-                'timeout'  => 10,
+                'connect_timeout' => 5,
+                'read_timeout'    => 10,
                 'defaults' => [
                     'headers' => ['Content-Type' => 'application/json']
                 ],
