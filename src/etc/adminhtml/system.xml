@@ -52,6 +52,11 @@
                     <label>Cron Schedule</label>
                     <comment>Blog paths are indexed according to this schedule, if you make regular blog updates then increase the frequency</comment>
                 </field>
+
+                <field id="page_size" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Page Size</label>
+                    <comment>How many items to request per API page, reduce if indexing times out</comment>
+                </field>
             </group>
 
             <group id="seo" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
