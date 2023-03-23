@@ -9,6 +9,7 @@ namespace Skywire\WordpressApi\Model\Api;
 
 
 use GuzzleHttp\Psr7\Message;
+use Laminas\Json\Json;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\DataObject;
 use Magento\Store\Model\ScopeInterface;
@@ -71,7 +72,7 @@ abstract class ApiAbstract
     {
         $response = $this->_request($this->_parseRoute(), $params);
 
-        $collection = $this->_createCollection(\Zend_Json::decode($response->getBody()));
+        $collection = $this->_createCollection(Json::decode($response->getBody(), Json::TYPE_ARRAY));
 
         if ($totalPages = $response->getHeader('X-WP-TotalPages')) {
             if (is_array($totalPages)) {
@@ -92,7 +93,7 @@ abstract class ApiAbstract
     {
         $result = $this->_request($this->_parseRoute($id));
         $entity = new DataObject();
-        $this->_populateApiData(\Zend_Json::decode($result->getBody()), $entity);
+        $this->_populateApiData(Json::decode($result->getBody(), Json::TYPE_ARRAY), $entity);
 
         return $entity;
     }

@@ -2,6 +2,7 @@
 
 namespace Skywire\WordpressApi\Model\Index;
 
+use Laminas\Json\Json;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
@@ -85,7 +86,7 @@ class Spider
                         break;
                     }
 
-                    $items = \Zend_Json::decode($body);
+                    $items = Json::decode($body, Json::TYPE_ARRAY);
 
                     foreach ($items as $item) {
                         /** @var Path $path */
