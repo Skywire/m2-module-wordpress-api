@@ -102,9 +102,7 @@ class Spider
                         );
                     }
 
-                    $headers = $response->getHeaders();
-
-                    if (!isset($headers['X-WP-TotalPages']) || $headers['X-WP-TotalPages'][0] <= $page) {
+                    if (!$response->getHeader('X-WP-TotalPages') || $response->getHeader('X-WP-TotalPages')[0] <= $page) {
                         $nextPage = false;
                     }
                     $page++;
