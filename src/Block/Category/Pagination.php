@@ -59,7 +59,7 @@ class Pagination
         return $this->getPageUrl($nextPage);
     }
 
-    protected function getPageUrl($page)
+    public function getPageUrl($page)
     {
         return str_replace('/index', '',
             $this->getUrl($this->requestHelper->getUrlWithoutPagination($this->getRequest()), ['p' => $page]));
